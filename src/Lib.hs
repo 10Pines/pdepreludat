@@ -1,9 +1,12 @@
 {-# LANGUAGE DataKinds, TypeOperators, UndecidableInstances, FlexibleInstances, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+module Lib (
+    (/),
+    someFunc
+) where 
 
-module Lib
-    ( someFunc
-    ) where
-
+import Prelude hiding ((/))
+import qualified Prelude as P
 import GHC.TypeLits
 import Data.Typeable
 
@@ -12,6 +15,24 @@ someFunc = putStrLn "someFunc"
 
 instance Show (a -> b) where
     show _ = "<una función>"
+
+class Fractionable a where
+    toFractional :: (Fractional b) => a -> b
+
+instance Fractionable Int where
+    toFractional entero = fromIntegral entero
+
+instance Fractionable Integer where
+    toFractional entero = fromIntegral entero
+
+instance Fractionable Double where
+    toFractional = fromRational . toRational
+
+instance Fractionable Float where
+    toFractional = fromRational . toRational
+
+(/) :: (Fractionable a, Fractionable b, Fractional c) => a -> b -> c
+a / b = toFractional a P./ toFractional b
 
 -- TODO: intentar hacer funcionar esto para filter
 -- instance (Typeable a, Typeable b) => Show (a -> b) where
