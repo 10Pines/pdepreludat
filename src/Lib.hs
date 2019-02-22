@@ -2,16 +2,25 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 module Lib (
     (/),
-    someFunc
+    someFunc,
+    module Prelude,
+    concat,
+    length
 ) where 
 
-import Prelude hiding ((/))
+import Prelude hiding ((/), concat, length)
 import qualified Prelude as P
 import GHC.TypeLits
 import Data.Typeable
 
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
+
+length :: [a] -> Int
+length = P.length
+
+concat :: [[a]] -> [a]
+concat = P.concat
 
 instance Show (a -> b) where
     show _ = "<una función>"
