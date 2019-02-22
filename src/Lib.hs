@@ -5,10 +5,13 @@ module Lib (
     someFunc,
     module Prelude,
     concat,
-    length
+    length,
+    elem,
+    sum,
+    product
 ) where 
 
-import Prelude hiding ((/), concat, length)
+import Prelude hiding ((/), concat, length, elem, sum, product)
 import qualified Prelude as P
 import GHC.TypeLits
 import Data.Typeable
@@ -16,12 +19,23 @@ import Data.Typeable
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
 
+-- Reemplazos para Foldable
 length :: [a] -> Int
 length = P.length
 
 concat :: [[a]] -> [a]
 concat = P.concat
 
+elem :: Eq a => a -> [a] -> Bool
+elem = P.elem
+
+sum :: Num a => [a] -> a
+sum = P.sum
+
+product :: Num a => [a] -> a
+product = P.product
+
+-- Show de funciones
 instance Show (a -> b) where
     show _ = "<una función>"
 
