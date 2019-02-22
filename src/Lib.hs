@@ -11,11 +11,15 @@ module Lib (
     product,
     null,
     foldr,
-    foldl
+    foldr1,
+    foldl,
+    foldl1,
+    maximum,
+    minimum
 ) where 
 
 import Prelude hiding ((/), concat, length, elem, sum, product, null,
-                       foldr, foldl)
+                       foldr, foldr1, foldl, foldl1, maximum, minimum)
 import qualified Prelude as P
 import GHC.TypeLits
 import Data.Typeable
@@ -45,8 +49,20 @@ null = P.null
 foldr :: (a -> b -> b) -> b -> [a] -> b
 foldr = P.foldr
 
+foldr1 :: (a -> a -> a) -> [a] -> a
+foldr1 = P.foldr1
+
 foldl :: (b -> a -> b) -> b -> [a] -> b
 foldl = P.foldl
+
+foldl1 :: (a -> a -> a) -> [a] -> a
+foldl1 = P.foldl1
+
+maximum :: Ord a => [a] -> a
+maximum = P.maximum
+
+minimum :: Ord a => [a] -> a
+minimum = P.minimum
 
 -- Show de funciones
 instance Show (a -> b) where
