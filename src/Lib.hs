@@ -8,10 +8,14 @@ module Lib (
     length,
     elem,
     sum,
-    product
+    product,
+    null,
+    foldr,
+    foldl
 ) where 
 
-import Prelude hiding ((/), concat, length, elem, sum, product)
+import Prelude hiding ((/), concat, length, elem, sum, product, null,
+                       foldr, foldl)
 import qualified Prelude as P
 import GHC.TypeLits
 import Data.Typeable
@@ -34,6 +38,15 @@ sum = P.sum
 
 product :: Num a => [a] -> a
 product = P.product
+
+null ::  [a] -> Bool
+null = P.null
+
+foldr :: (a -> b -> b) -> b -> [a] -> b
+foldr = P.foldr
+
+foldl :: (b -> a -> b) -> b -> [a] -> b
+foldl = P.foldl
 
 -- Show de funciones
 instance Show (a -> b) where
