@@ -15,11 +15,18 @@ module Lib (
     foldl,
     foldl1,
     maximum,
-    minimum
+    minimum,
+    all,
+    any,
+    and,
+    or,
+    concatMap,
+    notElem
 ) where 
 
 import Prelude hiding ((/), concat, length, elem, sum, product, null,
-                       foldr, foldr1, foldl, foldl1, maximum, minimum)
+                       foldr, foldr1, foldl, foldl1, maximum, minimum,
+                       all, any, and, or, concatMap, notElem)
 import qualified Prelude as P
 import GHC.TypeLits
 import Data.Typeable
@@ -63,6 +70,24 @@ maximum = P.maximum
 
 minimum :: Ord a => [a] -> a
 minimum = P.minimum
+
+all :: (a -> Bool) -> [a] -> Bool
+all = P.all
+
+any :: (a -> Bool) -> [a] -> Bool
+any = P.any
+
+and :: [Bool] -> Bool
+and = P.and
+
+or :: [Bool] -> Bool
+or = P.or
+
+concatMap :: (a -> [b]) -> [a] -> [b]
+concatMap = P.concatMap
+
+notElem :: (Eq a) => a -> [a] -> Bool
+notElem = P.notElem
 
 -- Show de funciones
 instance Show (a -> b) where
