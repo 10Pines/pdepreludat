@@ -94,10 +94,11 @@ dependencies:
 - base >= 4.7 && < 5
 - pdeprelude
 
+default-extensions:
+  - NoImplicitPrelude
+
 library:
   source-dirs: src
-  default-extensions:
-  - NoImplicitPrelude
 
 executables:
   {{name}}-exe:
@@ -109,8 +110,6 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - {{name}}
-    default-extensions:
-    - NoImplicitPrelude
 
 tests:
   {{name}}-test:
@@ -122,8 +121,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - {{name}}
-    default-extensions:
-    - NoImplicitPrelude
+    - hspec
 
 {-# START_FILE app/Main.hs #-}
 module Main where
@@ -145,9 +143,13 @@ someFunc1 = putStrLn "someFunc"
 
 {-# START_FILE test/Spec.hs #-}
 import Lib
+import Test.Hspec
 
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = hspec $ do
+  describe "Example test" $ do
+    it "2 plus 2 is 4" $ do
+      2 + 2 `shouldBe` 4
 
 {-# START_FILE .gitignore #-}
 .stack-work/
