@@ -38,7 +38,7 @@ packages:
 - .
 
 extra-deps:
-- git: git@github.com:10Pines/pdepreludat.git
+- git: https://github.com/10Pines/pdepreludat.git
   commit: master
 # Dependency packages to be pulled from upstream that are not in the resolver
 # using the same syntax as the packages field.
