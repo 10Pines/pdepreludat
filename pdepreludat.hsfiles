@@ -38,7 +38,7 @@ packages:
 - .
 
 extra-deps:
-- git: git@github.com:10Pines/pdepreludat.git
+- git: https://github.com/10Pines/pdepreludat.git
   commit: master
 # Dependency packages to be pulled from upstream that are not in the resolver
 # using the same syntax as the packages field.
@@ -129,7 +129,7 @@ module Main where
 import Lib
 
 main :: IO ()
-main = someFunc
+main = return ()
 
 {-# START_FILE src/Library.hs #-}
 module Library
@@ -138,23 +138,25 @@ module Library
 
 import Lib
 
-someFunc1 :: IO ()
-someFunc1 = putStrLn "someFunc"
+someFunc1 :: Int
+someFunc1 = 42
 
 {-# START_FILE test/Spec.hs #-}
 import Lib
+import Library
 import Test.Hspec
 
 main :: IO ()
 main = hspec $ do
   describe "Example test" $ do
-    it "2 plus 2 is 4" $ do
-      2 + 2 `shouldBe` 4
+    it "The answer to all questions is..." $ do
+      someFunc1 `shouldBe` 42
 
 {-# START_FILE .gitignore #-}
 .stack-work/
 {{name}}.cabal
 *~
+.history
 {-# START_FILE ChangeLog.md #-}
 # Changelog for {{name}}
 
@@ -198,4 +200,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {-# START_FILE Setup.hs #-}
 import Distribution.Simple
 main = defaultMain
+
+{-# START_FILE .travis.yml #-}
+sudo: false
+
+language: c
+
+cache:
+  directories:
+    - ~/.stack
+
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+
+before_install:
+  # Download and unpack the stack executable
+  - mkdir -p ~/.local/bin
+  - export PATH=$HOME/.local/bin:$PATH
+  - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+
+install:
+  - stack --no-terminal --install-ghc test --only-dependencies
+
+script:
+  - stack --no-terminal test --haddock --no-haddock-deps
 
