@@ -154,7 +154,7 @@ main = hspec $ do
 
 {-# START_FILE .gitignore #-}
 .stack-work/
-{{name}}.cabal
+*.cabal
 *~
 .history
 {-# START_FILE ChangeLog.md #-}
@@ -197,6 +197,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {-# START_FILE README.md #-}
 # ejercicio-alumno
 
+## Integrantes
+
+- integrante1 (usuario github)
+- integrante2 (usuario github)
+...
+
 {-# START_FILE Setup.hs #-}
 import Distribution.Simple
 main = defaultMain
@@ -227,3 +233,34 @@ install:
 script:
   - stack --no-terminal test --haddock --no-haddock-deps
 
+{-# START_FILE .circleci/config.yml #-}
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian:stretch
+
+    steps:
+      - run:
+          name: APT dependencies
+          command: apt-get update && apt-get install -y libgmp-dev curl build-essential netbase git
+
+      - run:
+          name: Install Stack
+          command: |
+            mkdir -p ~/.local/bin
+            curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+
+      - checkout
+
+      - run:
+          name: Setup project dependencies
+          command: |
+            export PATH=$HOME/.local/bin:$PATH
+            stack --no-terminal --install-ghc test --only-dependencies
+
+      - run:
+          name: Project tests
+          command: |
+            export PATH=$HOME/.local/bin:$PATH
+            stack --no-terminal test --haddock --no-haddock-deps
