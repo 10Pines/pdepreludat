@@ -37,8 +37,10 @@ packages:
 - .
 
 extra-deps:
-- git: https://github.com/10Pines/pdepreludat.git
-  commit: master
+# UNCOMMENT ME - git: https://github.com/10Pines/pdepreludat.git
+# UNCOMMENT ME   commit: REPLACE WITH CURRENT COMMIT
+
+- ../ # REMOVE THIS LINE
 # Dependency packages to be pulled from upstream that are not in the resolver
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)

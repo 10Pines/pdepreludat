@@ -2,16 +2,19 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.9
+      - image: golang:alpine
     steps:
       - checkout
 
-      - run: |
-          mkdir artifacts
-          ./build_hsfiles.sh > artifacts/pdepreludat.hsfiles
-          cat artifacts/pdepreludat.hsfiles
-      - run: |
+      - run:
+          name: Build hsfiles
+          command: |
+            apk --no-cache add git bash
+            mkdir artifacts
+            ./build_hsfiles.sh > artifacts/pdepreludat.hsfiles
+            cat artifacts/pdepreludat.hsfiles
+      - run:
+          name: Make release
+          command: |
             go get github.com/tcnksm/ghr
-            ls -la 
-            ls -la artifacts
             ghr -replace v0.0.0 ./artifacts/
