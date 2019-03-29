@@ -108,7 +108,7 @@ Para más información podés ir a la [página oficial de stack](https://docs.ha
 Correr el siguiente comando que va a crear una carpeta llamada `proyecto-test` (o el nombre que le hayan pasado `stack new`) con el proyecto adentro.
 
 ```bash
-stack new proyecto-test https://raw.githubusercontent.com/10Pines/pdepreludat/master/pdepreludat.hsfiles
+stack new proyecto-test http://bit.ly/preludat
 ```
 
 Una vez creada la carpeta, moverse a la misma y compilar el proyecto con los siguientes comandos:
