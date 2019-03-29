@@ -3,6 +3,10 @@ jobs:
   build:
     docker:
       - image: golang:alpine
+    filters:
+      tags:
+        only: /^\d+\.\d+\.\d+$/
+
     steps:
       - checkout
 
@@ -17,4 +21,4 @@ jobs:
           name: Make release
           command: |
             go get github.com/tcnksm/ghr
-            ghr -replace v0.0.0 ./artifacts/
+            ghr -c ${CIRCLE_SHA1} -replace ${CIRCLE_TAG} ./artifacts/
