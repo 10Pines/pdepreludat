@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9
+    steps:
+      - checkout
+
+      - run: |
+          mkdir artifacts
+          ./build_hsfiles.sh > artifacts/pdepreludat.hsfiles
+          cat artifacts/pdepreludat.hsfiles
+      - run: |
+            go get github.com/tcnksm/ghr
+            ls -la 
+            ls -la artifacts
+            ghr -replace v0.0.0 ./artifacts/
