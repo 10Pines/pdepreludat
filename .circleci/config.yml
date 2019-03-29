@@ -1,8 +1,10 @@
+
 version: 2
 jobs:
   build:
     docker:
       - image: golang:alpine
+
     steps:
       - checkout
 
@@ -17,4 +19,17 @@ jobs:
           name: Make release
           command: |
             go get github.com/tcnksm/ghr
-            ghr -replace v0.0.0 ./artifacts/
+            echo Releasing version _${CIRCLE_TAG}_
+            ghr -c ${CIRCLE_SHA1} -replace ${CIRCLE_TAG} ./artifacts/
+
+workflows:
+  version: 2
+  release:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+
