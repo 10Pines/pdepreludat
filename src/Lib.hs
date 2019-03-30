@@ -1,6 +1,6 @@
 {-# LANGUAGE DataKinds, TypeOperators, UndecidableInstances, FlexibleInstances, ScopedTypeVariables #-}
 {-# LANGUAGE NoImplicitPrelude #-}
-module PdePreludat (
+module Lib (
     (/),
     module Prelude,
     concat,
