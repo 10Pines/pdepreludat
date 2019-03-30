@@ -1,0 +1,14 @@
+language: sh
+
+script: ./build_hsfiles.sh > pdepreludat.hsfiles
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "tq6xDTZS1nGxFyhQLpOHDv5L3lwsQlImViFcJvJ/0dDioQA+fR2nkSUNyr78H4MexwQ4/M9LyFvjzeGhXWcaRqD3qmQRQJPhdC5QsOTnqSYai5TOdZ/v5PCxTVa8gkohwe0uweSVhCLLYi9ZD3+xdzQ+DCXu6k019VcgLWYH/8BjYuqkoBNK+jnN8WMS8inMuGXgsRNz+I6ahJjStT5P69vKKnvBQz1OjNbWTKLu/5jE992fb4BCegCo/Ryvv+Hm8F6UsSiqd83BFKGkJIg+KGqeTDcrWbqxgvqFRimfMeakUYKvL/IrK/AN8/FV84IkVwjbE950Ntt+YoeUblF4mBWkjzdYcWwAdU6KNI/rvKMsoTcjD07dujNMeSYqxwCF7+fUNePZF4OlZ5LXatlNnKqaSKHg1EhPDVpPfiepTyKFPG9l7CBghla5JkKnCF1MJL3yssXmUXNKrc4kzSzhDCpPet4JJOWbvqsNKul8BEbotZsIsV/f9jl8jDDo+HPHI13lFnOGq44wdXz+caRQfJDknRG0F+S286TgZ49ToPb55sL924M8xYunTjYVXW/8/1EMXUUgsLrt1IitWbugHU71iblCz0cGeiUK4mp5s/c8Seds8M13N4y0gVhIweEg8lARe2Cw5ifCU38l2ODxsWLk82LhteM6MCSQoJGTaVE=" 
+  file: "pdepreludat.hsfiles"
+  skip_cleanup: true
+  draft: true
+  on:
+    tags: true
+
