@@ -1,8 +1,7 @@
 {-# LANGUAGE DataKinds, TypeOperators, UndecidableInstances, FlexibleInstances, ScopedTypeVariables #-}
 {-# LANGUAGE NoImplicitPrelude #-}
-module Lib (
+module PdePreludat (
     (/),
-    someFunc,
     module Prelude,
     concat,
     length,
@@ -30,9 +29,6 @@ import Prelude hiding ((/), concat, length, elem, sum, product, null,
 import qualified Prelude as P
 import GHC.TypeLits
 import Data.Typeable
-
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
 
 -- Reemplazos para Foldable
 length :: [a] -> Int
