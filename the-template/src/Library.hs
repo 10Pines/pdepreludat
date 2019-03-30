@@ -1,6 +1,4 @@
-module Library
-    ( someFunc1
-    ) where
+module Library where
 import PdePreludat
 
 someFunc1 :: Int
