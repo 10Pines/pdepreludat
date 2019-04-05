@@ -127,3 +127,15 @@ instance TypeError (Text "Estás operando una lista con un número") => Num [a] 
     signum = error "unreacheable"
     fromInteger = error "unreacheable"
     negate = error "unreacheable"
+
+(...) :: a
+(...) = error "Falta implementar."
+
+implementame :: a
+implementame = (...)
+
+arreglame :: a
+arreglame = (...)
+
+size :: [a] -> Int
+size = length
