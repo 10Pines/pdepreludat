@@ -136,3 +136,6 @@ implementame = (...)
 
 arreglame :: a
 arreglame = (...)
+
+size :: [a] -> Int
+size = length
