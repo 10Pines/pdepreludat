@@ -20,7 +20,11 @@ module PdePreludat (
     and,
     or,
     concatMap,
-    notElem
+    notElem,
+    implementame,
+    arreglame,
+    (...),
+    size
 ) where 
 
 import Prelude hiding ((/), concat, length, elem, sum, product, null,
