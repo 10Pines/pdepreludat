@@ -147,7 +147,7 @@ instance TypeError ErrorNumeroXCaracter => Real Char
 
 --Errores entre enteros y fraccionales
 type ErrorFraccionalXEntero =
-    Text "Estás operando enteros con fraccionales, que son diferentes tipos. Podés convertir el entero en decimal usando toFloat/1 o el decimal en entero usando round/1, floor/1 o ceiling/1."
+    Text "Estás usando un entero como un decimal o viceversa, y los números enteros y decimales son de diferente tipo.\nPodés convertir el entero en decimal usando toFloat/1 o el decimal en entero usando round/1, floor/1 o ceiling/1.\n\nTambién, si querés leer mas al respecto:\nhttp://wiki.uqbar.org/wiki/articles/problemas-comunes-con-los-tipos-numericos-de-haskell.html\n"
 
 instance TypeError ErrorFraccionalXEntero => Fractional Int
 instance TypeError ErrorFraccionalXEntero => Fractional Integer
