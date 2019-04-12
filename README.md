@@ -43,9 +43,9 @@ Se definió una instancia de `Show` para las funciones
 <una función>
 ```
 
-## División entre fracciones y enteros
+## Operaciones entre fracciones y enteros
 
-Se reemplazó la división entre `Fractional`s (/) para que no sea un error de tipos dividir `Integral`s con `Fractional`s
+Se agregó la función `toFloat` para convertir enteros a decimales, ya que creemos que `fromIntegral` puede ser un poco confuso de usar, y se agregaron mejores mensajes de error a las operaciones donde se esperaba un decimal y llegó un entero o viceversa.
 
 ### Antes
 
@@ -61,7 +61,10 @@ Se reemplazó la división entre `Fractional`s (/) para que no sea un error de t
 
 ```haskell
 > sum [1,2] / length [1,2]
-1.5
+<interactive>:1:1: error:
+    • Estás operando enteros con fraccionales, que son diferentes tipos. Podés convertir el entero en decimal usando toFloat/1 o el decimal en entero usando round/1, floor/1 o ceiling/1.
+    • In the expression: sum [1, 2] / length [1, 2]
+      In an equation for ‘it’: it = sum [1, 2] / length [1, 2]
 ```
 
 ## Mensajes de error al operar funciones o listas

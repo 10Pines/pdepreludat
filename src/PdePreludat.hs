@@ -1,7 +1,6 @@
-{-# LANGUAGE DataKinds, TypeOperators, UndecidableInstances, FlexibleInstances, ScopedTypeVariables #-}
+{-# LANGUAGE DataKinds, TypeOperators, UndecidableInstances, FlexibleInstances, ScopedTypeVariables, MultiParamTypeClasses #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 module PdePreludat (
-    (/),
     module Prelude,
     concat,
     length,
@@ -24,10 +23,11 @@ module PdePreludat (
     implementame,
     arreglame,
     (...),
-    size
+    size,
+    toFloat
 ) where 
 
-import Prelude hiding ((/), concat, length, elem, sum, product, null,
+import Prelude hiding (concat, length, elem, sum, product, null,
                        foldr, foldr1, foldl, foldl1, maximum, minimum,
                        all, any, and, or, concatMap, notElem)
 import qualified Prelude as P
@@ -93,24 +93,6 @@ notElem = P.notElem
 instance Show (a -> b) where
     show _ = "<una función>"
 
-class Fractionable a where
-    toFractional :: (Fractional b) => a -> b
-
-instance Fractionable Int where
-    toFractional entero = fromIntegral entero
-
-instance Fractionable Integer where
-    toFractional entero = fromIntegral entero
-
-instance Fractionable Double where
-    toFractional = fromRational . toRational
-
-instance Fractionable Float where
-    toFractional = fromRational . toRational
-
-(/) :: (Fractionable a, Fractionable b, Fractional c) => a -> b -> c
-a / b = toFractional a P./ toFractional b
-
 -- TODO: intentar hacer funcionar esto para filter
 -- instance (Typeable a, Typeable b) => Show (a -> b) where
 --     show _ = "Una función de tipo: "
@@ -163,6 +145,15 @@ instance TypeError ErrorNumeroXCaracter => RealFrac Char
 instance TypeError ErrorNumeroXCaracter => RealFloat Char
 instance TypeError ErrorNumeroXCaracter => Real Char
 
+--Errores entre enteros y fraccionales
+type ErrorFraccionalXEntero =
+    Text "Estás operando enteros con fraccionales, que son diferentes tipos. Podés convertir el entero en decimal usando toFloat/1 o el decimal en entero usando round/1, floor/1 o ceiling/1."
+
+instance TypeError ErrorFraccionalXEntero => Fractional Int
+instance TypeError ErrorFraccionalXEntero => Fractional Integer
+instance TypeError ErrorFraccionalXEntero => Integral Float
+instance TypeError ErrorFraccionalXEntero => Integral Double
+
 (...) :: a
 (...) = error "Falta implementar."
 
@@ -174,3 +165,6 @@ arreglame = (...)
 
 size :: [a] -> Int
 size = length
+
+toFloat :: Integral a => a -> Float
+toFloat = fromIntegral
