@@ -32,6 +32,20 @@ import qualified Prelude as P
 import GHC.TypeLits
 import Data.Typeable
 
+newtype Number = Number P.Double deriving (Show, Eq, Ord, Num, RealFrac, Real, Fractional) via P.Double
+
+numberToIntegral :: (Integral a) => Number -> a
+numberToIntegral = round
+
+numberToFractional :: (Fractional a) => Number -> a
+numberToFractional = realToFrac
+
+integralToNumber :: Integral a => a -> Number
+integralToNumber number = P.fromIntegral number :: Number
+
+integerToNumber :: P.Integer -> Number
+integerToNumber number = P.fromInteger number :: Number
+
 -- Reemplazos para Foldable
 length :: [a] -> Int
 length = P.length
