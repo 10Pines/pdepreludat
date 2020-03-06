@@ -4,6 +4,7 @@ import Test.Hspec
 
 main :: IO ()
 main = hspec $ do
-  describe "Example test" $ do
-    it "The answer to all questions is..." $ do
-      someFunc1 `shouldBe` 42
+  describe "Test de ejemplo" $ do
+    it "El pdepreludat se instaló correctamente" $ do
+      2 `shouldBe` doble 1
+

@@ -26,6 +26,7 @@ dependencies:
 default-extensions:
   - NoImplicitPrelude
   - FlexibleContexts
+  - RebindableSyntax
 
 library:
   source-dirs: src
