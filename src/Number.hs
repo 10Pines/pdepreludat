@@ -8,7 +8,9 @@ newtype Number = Number P.Double deriving (P.Show, P.Eq, P.Ord, P.Num, P.RealFra
 -- Funciones para convertir entre Number y los Num del Prelude
 
 numberToIntegral :: (P.Integral a) => Number -> a
-numberToIntegral = P.round
+numberToIntegral n | isFractional n = P.error "Se esperaba un valor entero pero se pasó uno con decimales"
+                   | P.otherwise = P.floor n
+    where isFractional numero = P.floor numero P./= P.ceiling numero
 
 numberToFractional :: (P.Fractional a) => Number -> a
 numberToFractional = P.realToFrac
@@ -18,18 +20,6 @@ integralToNumber number = P.fromIntegral number :: Number
 
 integerToNumber :: P.Integer -> Number
 integerToNumber number = P.fromInteger number :: Number
-
--- Redefiniciones de Num a Number
-
-(+) :: Number -> Number -> Number
-(+) = (P.+)
-
-(*) :: Number -> Number -> Number
-(*) = (P.*)
-
-div :: Number -> Number -> Number
-div divisor dividendo = integralToNumber $
-    P.div (numberToIntegral divisor) (numberToIntegral dividendo)
 
 -- Redefiniciones para que los números literales se concreticen a Number por defecto
 

@@ -1,8 +1,9 @@
 module Redefinitions where
 
--- Here we redefine functions from the prelude to adapt their types
--- so they use [] instead of Foldable t => t and Number instad of
--- Num p => p
+-- Aquí redefinimos las funciones del prelude para adaptar sus tipos 
+
+-- Listas
+-- usamos [] en lugar de Foldable t => t
 
 import Prelude (Bool, Show, Ord, Eq, Monad, Enum, (.))
 import qualified Prelude as P
@@ -67,3 +68,45 @@ sequence_ = P.sequence_
 
 mapM_ :: (Monad m) => (a -> m b) -> [a] -> m ()
 mapM_ = P.mapM_
+
+-- Redefiniciones de Num a Number
+
+(+) :: Number -> Number -> Number
+(+) = (P.+)
+
+(*) :: Number -> Number -> Number
+(*) = (P.*)
+
+(-) :: Number -> Number -> Number
+(-) = (P.-)
+
+(/) :: Number -> Number -> Number
+(/) = (P./)
+
+div :: Number -> Number -> Number
+div divisor dividendo = integralToNumber P.$
+    P.div (numberToIntegral divisor) (numberToIntegral dividendo)
+
+take cantidad = P.take (numberToIntegral cantidad)
+
+lista !! posicion = lista P.!! (numberToIntegral posicion)
+
+isFractional :: Number -> Bool
+isFractional numero = P.floor numero P./= P.ceiling numero
+
+abs :: Number -> Number
+abs = P.abs
+
+signum :: Number -> Number
+signum = P.signum
+
+negate :: Number -> Number
+negate = P.negate
+
+even :: Number -> Bool
+even numero = P.even (numberToIntegral numero)
+
+odd :: Number -> Bool
+odd numero = P.odd (numberToIntegral numero)
+
+
