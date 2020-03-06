@@ -1,10 +1,15 @@
-module FoldableByListReplacements where
+module Redefinitions where
 
-import Prelude (Int, Bool, Show, Float, Integral, Ord, Eq, Num)
+-- Here we redefine functions from the prelude to adapt their types
+-- so they use [] instead of Foldable t => t and Number instad of
+-- Num p => p
+
+import Prelude (Bool, Show, Ord, Eq, Monad, Enum, (.))
 import qualified Prelude as P
+import Number
 
-length :: [a] -> Int
-length = P.length
+length :: [a] -> Number
+length = integralToNumber . P.length
 
 concat :: [[a]] -> [a]
 concat = P.concat
@@ -12,10 +17,10 @@ concat = P.concat
 elem :: Eq a => a -> [a] -> Bool
 elem = P.elem
 
-sum :: Num a => [a] -> a
+sum :: [Number] -> Number
 sum = P.sum
 
-product :: Num a => [a] -> a
+product :: [Number] -> Number
 product = P.product
 
 null ::  [a] -> Bool
@@ -56,3 +61,9 @@ concatMap = P.concatMap
 
 notElem :: (Eq a) => a -> [a] -> Bool
 notElem = P.notElem
+
+sequence_ :: (Monad m) => [m a] -> m ()
+sequence_ = P.sequence_
+
+mapM_ :: (Monad m) => (a -> m b) -> [a] -> m ()
+mapM_ = P.mapM_
