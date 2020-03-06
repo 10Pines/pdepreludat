@@ -35,6 +35,8 @@ default-extensions:
 
 library:
   source-dirs: src
+  ghc-options:
+  - -Wno-missing-methods
 
 tests:
   pdeprelude-test:
