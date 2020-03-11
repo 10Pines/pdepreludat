@@ -80,16 +80,21 @@ mapM_ = P.mapM_
 (-) :: Number -> Number -> Number
 (-) = (P.-)
 
+(^) :: Number -> Number -> Number
+(^) numero exponente = (P.^) (numberToFractional numero) (numberToIntegral exponente)
+
+(^^) :: Number -> Number -> Number
+(^^) numero exponente = (P.^^) (numberToFractional numero) (numberToIntegral exponente)
+
+subtract :: Number -> Number -> Number
+subtract = P.subtract
+
 (/) :: Number -> Number -> Number
 (/) = (P./)
 
 div :: Number -> Number -> Number
 div divisor dividendo = integralToNumber P.$
     P.div (numberToIntegral divisor) (numberToIntegral dividendo)
-
-take cantidad = P.take (numberToIntegral cantidad)
-
-lista !! posicion = lista P.!! (numberToIntegral posicion)
 
 isFractional :: Number -> Bool
 isFractional numero = P.floor numero P./= P.ceiling numero
@@ -109,4 +114,35 @@ even numero = P.even (numberToIntegral numero)
 odd :: Number -> Bool
 odd numero = P.odd (numberToIntegral numero)
 
+lcm :: Number -> Number -> Number
+lcm numero1 numero2 = integralToNumber(P.lcm (numberToIntegral numero1) (numberToIntegral numero2))
 
+gcd :: Number -> Number -> Number
+gcd numero1 numero2 = integralToNumber(P.gcd (numberToIntegral numero1) (numberToIntegral numero2))
+
+ceiling :: Number -> Number
+ceiling numero = integralToNumber (P.ceiling numero)
+
+floor :: Number -> Number
+floor numero = integralToNumber (P.floor numero)
+
+round :: Number -> Number
+round numero = integralToNumber (P.round numero)
+
+truncate :: Number -> Number
+truncate numero = integralToNumber (P.truncate numero)
+
+-- Redefiniciones de Números y listas
+
+take cantidad = P.take (numberToIntegral cantidad)
+
+lista !! posicion = lista P.!! (numberToIntegral posicion)
+
+drop :: Number -> [a] -> [a]
+drop cantidad = P.drop (numberToIntegral cantidad)
+
+replicate :: Number -> a -> [a]
+replicate veces = P.replicate (numberToIntegral veces)
+
+splitAt :: Number -> [a] -> ([a], [a])
+splitAt posicion = P.splitAt (numberToIntegral posicion)
