@@ -5,7 +5,7 @@ module Redefinitions where
 -- Listas
 -- usamos [] en lugar de Foldable t => t
 
-import Prelude (Bool, Show, Ord, Eq, Monad, Enum, (.))
+import Prelude (Bool, Show, Ord, Eq, Monad, Enum, (.), (==))
 import qualified Prelude as P
 import Number
 
@@ -90,7 +90,8 @@ subtract :: Number -> Number -> Number
 subtract = P.subtract
 
 (/) :: Number -> Number -> Number
-(/) = (P./)
+_ / 0 = P.error "División por cero"
+numerador / divisor = numerador P./ divisor
 
 div :: Number -> Number -> Number
 div divisor dividendo = integralToNumber P.$
