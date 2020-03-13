@@ -4,9 +4,10 @@ Pdepreludat es una biblioteca que busca hacer más amigable y didáctico al Prel
 
 La biblioteca exporta un modulo que contiene la mayoría de las funciones existentes en el Prelude, con ciertas modificaciones:
 
-## Redefinición Foldable => []
+## Redefiniciones
 
-Fue redefinido el tipo de las funciones que trabajan sobre `Foldable t` para que trabajen sobre `[]`
+- Fue redefinido el tipo de las funciones que trabajan sobre `Foldable t` para que trabajen sobre `[]`
+- También tenemos un único tipo `Number` en lugar de `Int`, `Float` y todas sus variantes
 
 ### Antes
 
@@ -19,7 +20,7 @@ length :: Foldable t => t a -> Int
 
 ```haskell
 > :t length
-length :: [a] -> Int
+length :: [a] -> Number
 ```
 
 ## Mostrar funciones como valor en la consola

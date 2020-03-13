@@ -15,6 +15,9 @@ numberToIntegral n | isFractional n = P.error "Se esperaba un valor entero pero 
 numberToFractional :: (P.Fractional a) => Number -> a
 numberToFractional = P.realToFrac
 
+numberToFloat :: (P.RealFloat a) => Number -> a
+numberToFloat = P.realToFrac
+
 integralToNumber :: P.Integral a => a -> Number
 integralToNumber number = P.fromIntegral number :: Number
 
