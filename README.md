@@ -4,23 +4,123 @@ Pdepreludat es una biblioteca que busca hacer más amigable y didáctico al Prel
 
 La biblioteca exporta un modulo que contiene la mayoría de las funciones existentes en el Prelude, con ciertas modificaciones:
 
-## Redefiniciones
+## Simplificado tipo de funciones que recibían Foldable para que usen []
 
 - Fue redefinido el tipo de las funciones que trabajan sobre `Foldable t` para que trabajen sobre `[]`
-- También tenemos un único tipo `Number` en lugar de `Int`, `Float` y todas sus variantes
 
 ### Antes
 
 ```haskell
-> :t length
-length :: Foldable t => t a -> Int
+> :t any
+any :: Foldable t =>  (a -> Bool) -> t a -> Bool
 ```
 
 ### Después
 
 ```haskell
-> :t length
-length :: [a] -> Number
+> :t any
+any :: (a -> Bool) -> [a] -> Bool
+```
+
+## Reemplazada jerarquía de tipos de la typeclass Num por un único tipo Number
+
+A efectos prácticos, el tipo Number es lo mismo que un Double, y todas las funciones que usaban cualquier otro tipo de número o algún tipo númerico más general fueron redefinidas para que trabajen con Number.
+Este es el cambio más disruptivo o que rompe más la compatibilidad con el resto del mundo de Haskell.
+
+La idea es que ayude en:
+
+### Hacer más simples algunos tipos que se pueden encontrar desde el principio de la cursada
+
+#### Antes
+
+```haskell
+> :t 5
+5 :: Num p => p
+```
+
+#### Después
+
+```haskell
+> :t 5
+5 :: Number
+```
+
+### Simplificar algunos errores
+
+#### Antes 
+
+```haskell
+> sum + 5
+<interactive>:9:1: error:
+    Non type-variable argument in the constraint: Num (t a -> a)
+    (Use FlexibleContexts to permit this)
+    When checking the inferred type
+    //...más errores
+```
+
+#### Después
+
+```haskell
+> sum + 5
+<interactive>:9:1: error:
+    • Couldn't match expected type ‘Number’
+                  with actual type ‘[Number] -> Number’
+    • Probable cause: ‘sum’ is applied to too few arguments
+    //...más errores
+```
+
+### Hacer innecesarias ciertas conversiones de números:
+
+#### Antes
+
+```haskell
+> sum [1,2,3,4] / length [1,2,3,4]
+<interactive>:7:1: error:
+    • No instance for (Fractional Int) arising from a use of ‘/’
+    • In the expression: sum [1, 2, 3, 4] / length [1, 2, 3, 4]
+      In an equation for ‘it’:
+          it = sum [1, 2, 3, ....] / length [1, 2, 3, ....]
+```
+
+#### Después
+
+```haskell
+> sum [1,2,3,4] / length [1,2,3,4]
+2.5
+```
+
+### El trade off más grande que hubo que hacer para permitir esas cosas, es que muchos errores en tiempo de compilación se movieron a tiempo de ejecución, es decir, los números ahora son menos _type safe_.
+
+#### Antes
+
+Esto ni siquiera tipa:
+
+```haskell
+> :t take 2.5 [1,2,3,4]
+
+<interactive>:1:6: error:
+    • Could not deduce (Fractional Int) arising from the literal ‘2.5’
+      from the context: Num a
+        bound by the inferred type of it :: Num a => [a]
+        at <interactive>:1:1
+```
+
+#### Después
+
+Esto tipa
+
+```haskell
+> :t take 2.5 [1,2,3,4]
+take 2.5 [1,2,3,4] :: [Number]
+```
+
+Pero falla en ejecución
+
+```haskell
+> take 2.5 [1,2,3,4]
+*** Exception: Se esperaba un valor entero pero se pasó uno con decimales
+CallStack (from HasCallStack):
+  error, called at /home/juan/Development/Proyectos/10pines/pdepreludat/src/Number.hs:11:39 in main:Number
 ```
 
 ## Mostrar funciones como valor en la consola
@@ -72,25 +172,6 @@ Se agregó la función `toFloat` para convertir enteros a decimales, ya que cree
 
 Se modificaron los mensajes de error que aparecen al usar funciones o listas donde se esperaba que haya un número.
 
-### Antes 
-
-```haskell
-> sum + 5
-<interactive>:9:1: error:
-    Non type-variable argument in the constraint: Num (t a -> a)
-    (Use FlexibleContexts to permit this)
-    When checking the inferred type
-    //...más errores
-```
-
-### Después
-
-```haskell
-> sum + 5
-<interactive>:9:1: error:
-    Estás usando una función como un número
-    In the expression: sum + 5
-    In an equation for ‘it’: it = sum + 5
 ```
 
 ## Para usarlo en un nuevo proyecto
