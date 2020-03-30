@@ -200,7 +200,7 @@ Una vez creada la carpeta, moverse a la misma y compilar el proyecto con los sig
 
 ```bash
 cd proyecto-test
-stack build
+stack build --test
 ```
 
 ### Probarlo
