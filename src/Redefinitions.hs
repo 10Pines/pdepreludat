@@ -147,3 +147,25 @@ replicate veces = P.replicate (numberToIntegral veces)
 
 splitAt :: Number -> [a] -> ([a], [a])
 splitAt posicion = P.splitAt (numberToIntegral posicion)
+
+quot :: Number -> Number -> Number
+quot unNumero otroNumero =
+    integralToNumber P.$ P.quot (numberToIntegral unNumero) (numberToIntegral otroNumero)
+
+rem :: Number -> Number -> Number
+rem unNumero otroNumero =
+    integralToNumber P.$ P.rem (numberToIntegral unNumero) (numberToIntegral otroNumero)
+
+mod :: Number -> Number -> Number
+mod unNumero otroNumero =
+    integralToNumber P.$ P.mod (numberToIntegral unNumero) (numberToIntegral otroNumero)
+
+quotRem :: Number -> Number -> (Number, Number)
+quotRem unNumero otroNumero =
+    case P.quotRem (numberToIntegral unNumero) (numberToIntegral otroNumero) of
+        (quot, rem) -> (integralToNumber quot, integralToNumber rem)
+
+divMod :: Number -> Number -> (Number, Number)
+divMod unNumero otroNumero =
+    case P.divMod (numberToIntegral unNumero) (numberToIntegral otroNumero) of
+        (div, mod) -> (integralToNumber div, integralToNumber mod)
