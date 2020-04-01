@@ -168,10 +168,31 @@ Se agregó la función `toFloat` para convertir enteros a decimales, ya que cree
       In an equation for ‘it’: it = sum [1, 2] / length [1, 2]
 ```
 
-## Mensajes de error al operar funciones o listas
+## Mensajes de error si se trata de usar una función como un comparable o equiparable
 
-Se modificaron los mensajes de error que aparecen al usar funciones o listas donde se esperaba que haya un número.
 
+### Antes
+
+```haskell
+> filter == map
+
+<interactive>:1:1: error:
+    • No instance for (Eq ((Bool -> Bool) -> [Bool] -> [Bool]))
+        arising from a use of ‘==’
+        (maybe you haven't applied a function to enough arguments?)
+    • In the expression: filter == map
+      In an equation for ‘it’: it = filter == map
+```
+
+### Después
+
+```haskell
+> filter == map
+
+<interactive>:1:1: error:
+    • Las funciones no se pueden ordenar ni comparar.
+    • In the expression: filter == map
+      In an equation for ‘it’: it = filter == map
 ```
 
 ## Para usarlo en un nuevo proyecto
