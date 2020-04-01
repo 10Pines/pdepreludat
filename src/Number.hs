@@ -3,7 +3,7 @@ module Number where
 import Prelude (($))
 import qualified Prelude as P
 
-newtype Number = Number P.Double deriving (P.Show, P.Eq, P.Ord, P.Num, P.RealFrac, P.Real, P.Fractional, P.Enum) via P.Double
+newtype Number = Number P.Double deriving (P.Show, P.Eq, P.Ord, P.Num, P.RealFrac, P.Real, P.Fractional, P.Enum, P.Floating) via P.Double
 
 -- Funciones para convertir entre Number y los Num del Prelude
 

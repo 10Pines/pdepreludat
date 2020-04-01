@@ -169,3 +169,57 @@ divMod :: Number -> Number -> (Number, Number)
 divMod unNumero otroNumero =
     case P.divMod (numberToIntegral unNumero) (numberToIntegral otroNumero) of
         (div, mod) -> (integralToNumber div, integralToNumber mod)
+
+pi :: Number
+pi = P.pi
+
+exp :: Number -> Number
+exp = P.exp
+
+log :: Number -> Number
+log = P.log
+
+sqrt :: Number -> Number
+sqrt = P.sqrt
+
+(**) :: Number -> Number -> Number
+(**) = (P.**)
+
+logBase :: Number -> Number -> Number
+logBase = P.logBase
+
+sin :: Number -> Number
+sin = P.sin
+
+cos :: Number -> Number
+cos = P.cos
+
+tan :: Number -> Number
+tan = P.tan
+
+asin :: Number -> Number
+asin = P.asin
+
+acos :: Number -> Number
+acos = P.acos
+
+atan :: Number -> Number
+atan = P.atan
+
+sinh :: Number -> Number
+sinh = P.sinh
+
+cosh :: Number -> Number
+cosh = P.cosh
+
+tanh :: Number -> Number
+tanh = P.tanh
+
+asinh :: Number -> Number
+asinh = P.asinh
+
+acosh :: Number -> Number
+acosh = P.acosh
+
+atanh :: Number -> Number
+atanh = P.atanh
