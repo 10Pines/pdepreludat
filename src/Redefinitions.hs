@@ -71,6 +71,11 @@ mapM_ = P.mapM_
 
 -- Redefiniciones de Num a Number
 
+infixl 7  *
+infixl 6  +, -
+infixr 8  ^, ^^
+infixl 7  /, `quot`, `rem`, `div`, `mod`
+
 (+) :: Number -> Number -> Number
 (+) = (P.+)
 
