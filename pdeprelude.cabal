@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 666f205e0c9bdf43d841926b200de04da8bdb98a3ce82ee972f6ddf4360c38a6
+-- hash: 983135630b3d059bec5924aceb372f8767d1a8694efbe286ce54ba1c5ade2fa5
 
 name:           pdeprelude
 version:        0.2.0.0
@@ -53,5 +53,6 @@ test-suite pdeprelude-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , hspec
     , pdeprelude
   default-language: Haskell2010

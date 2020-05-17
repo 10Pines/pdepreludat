@@ -1,9 +1,9 @@
 module Number where 
 
-import Prelude (($))
+import Prelude (($), (.))
 import qualified Prelude as P
 
-newtype Number = Number P.Double deriving (P.Show, P.Eq, P.Ord, P.Num, P.RealFrac, P.Real, P.Fractional, P.Enum, P.Floating) via P.Double
+newtype Number = Number P.Double deriving (P.RealFrac, P.Num, P.Real, P.Fractional, P.Enum, P.Floating) via P.Double
 
 -- Funciones para convertir entre Number y los Num del Prelude
 
@@ -31,3 +31,24 @@ fromInteger = P.fromInteger
 
 fromRational :: P.Rational -> Number
 fromRational = P.fromRational
+
+-- Redondeos para evitar los errores que pueden surgir de trabajar con numeros de punto flotante
+
+roundNumber :: (P.Fractional a, P.RealFrac a) => a -> a
+roundNumber = roundingTo $ numberToIntegral (numberToFractional digitsAfterComma)
+
+digitsAfterComma :: Number
+digitsAfterComma = 9
+
+roundingTo :: (P.Integral b, P.Fractional a, P.RealFrac a) => b -> a -> a
+roundingTo n = (P./ exp) . P.fromIntegral . P.round . (P.* exp)
+    where exp = (numberToFractional 10) P.^ n
+
+instance P.Ord Number where
+    compare (Number a) (Number b) = P.compare (roundNumber a) (roundNumber b)
+
+instance P.Eq Number where
+    Number a == Number b = roundNumber a P.== roundNumber b
+
+instance P.Show Number where
+    show (Number x) = P.show $ roundNumber x
