@@ -23,6 +23,8 @@ main = hspec $
         (1 / 3) `shouldBeTheSameNumberAs` 0.333333333
       it "no se pierde informacion al redondear en sucesivas operaciones" $ do
         (1 / 3 * 3) `shouldBeTheSameNumberAs` 1
+      it "se redondea al usarse como parámetro de funciones que necesitan enteros" $ do
+        take 0.9999999999 [1,2,3,4] `shouldBe` [1]
 
 shouldBeTheSameNumberAs :: Number -> Number -> Expectation
 shouldBeTheSameNumberAs aNumber anotherNumber =
