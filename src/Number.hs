@@ -11,10 +11,11 @@ type WrappedNum = P.Double
 -- Funciones para convertir entre Number y los Num del Prelude
 
 numberToIntegral :: (P.Integral a) => Number -> a
-numberToIntegral (Number number) | isFractional roundedNumber = P.error "Se esperaba un valor entero pero se pasó uno con decimales"
+numberToIntegral (Number number) | isFractional roundedNumber = P.error notAnIntegralErrorMessage
                                  | P.otherwise = P.floor roundedNumber
     where isFractional numero = P.floor numero P./= P.ceiling numero
           roundedNumber = roundWrappedNum number
+          notAnIntegralErrorMessage = "Se esperaba un valor entero pero se pasó uno con decimales: " P.++ P.show (Number number)
 
 numberToFractional :: (P.Fractional a) => Number -> a
 numberToFractional = P.realToFrac
