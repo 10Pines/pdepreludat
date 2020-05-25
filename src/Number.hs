@@ -1,4 +1,11 @@
-module Number where 
+module Number (Number,
+               fromInteger,
+               fromRational,
+               integralToNumber,
+               numberToFractional,
+               numberToIntegral,
+               integerToNumber,
+               numberToFloat) where 
 
 import Prelude (($), (.))
 import qualified Prelude as P
