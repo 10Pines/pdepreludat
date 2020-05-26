@@ -5,6 +5,7 @@ module PdePreludat (
     implementame,
     arreglame,
     (...),
+    ifThenElse,
 ) where
 
 -- Estos modulos solo exportan instancias de typeclasses, que se exportan por default asi que no es necesario reexportarlos
@@ -21,6 +22,17 @@ import Prelude (Ord(..), Eq(..), Show(..), Enum(..), Bool(..), ($), (&&), (++), 
 
 -- Este modulo no se reexporta, solo se importo para definir funciones en base a las definidas ahí.
 import qualified Prelude as P
+
+-- RebindableSyntax hace necesario que tengamos que definir ifThenElse si queremos
+-- usar el patron if condicion then algo else otraCosa
+
+ifThenElse :: Bool -> a -> a -> a
+ifThenElse condition ifTrue ifFalse = case condition of
+  True -> ifTrue
+  False -> ifFalse
+
+-- Valor pensado para usarla como implementación por defecto de funciones
+-- o valores que pidamos que sean implementados en los ejercicios
 
 (...) :: a
 (...) = P.error "Falta implementar."
