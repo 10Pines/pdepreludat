@@ -20,9 +20,11 @@ type WrappedNum = P.Double
 numberToIntegral :: (P.Integral a) => Number -> a
 numberToIntegral (Number number) | isFractional roundedNumber = P.error notAnIntegralErrorMessage
                                  | P.otherwise = P.floor roundedNumber
-    where isFractional numero = P.floor numero P./= P.ceiling numero
-          roundedNumber = roundWrappedNum number
+    where roundedNumber = roundWrappedNum number
           notAnIntegralErrorMessage = "Se esperaba un valor entero pero se pasó uno con decimales: " P.++ P.show (Number number)
+
+isFractional :: WrappedNum -> P.Bool
+isFractional numero = P.floor numero P./= P.ceiling numero
 
 numberToFractional :: (P.Fractional a) => Number -> a
 numberToFractional = P.realToFrac
@@ -63,4 +65,6 @@ instance P.Eq Number where
     Number a == Number b = roundWrappedNum a P.== roundWrappedNum b
 
 instance P.Show Number where
-    show (Number x) = P.show $ roundWrappedNum x
+    show (Number number) | isFractional roundedNumber = P.show $ roundedNumber
+                         | P.otherwise = P.show $ P.floor $ roundedNumber
+        where roundedNumber = roundWrappedNum number

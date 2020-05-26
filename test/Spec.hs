@@ -15,9 +15,14 @@ main = hspec $ do
     describe "Number" $ do
       it "dividir por 0 lanza error" $ do
         shouldThrowError $ 1 / 0
+      describe "Show" $ do
+        it "mostrar un numero entero no muestra los decimales" $ do
+          show 1 `shouldBe` "1"
+        it "mostrar un numero decimal incluye la parte decimal" $ do
+          show 1.5 `shouldBe` "1.5"
       describe "redondea a 9 decimales para compensar errores de punto flotante" $ do
         it "los numeros con muchos decimales se muestran redondeados" $ do
-          show 0.9999999999 `shouldBe` "1.0"
+          show 0.9999999999 `shouldBe` "1"
         it "los decimales literales se redondean" $ do
           0.9999999999 `shouldBeTheSameNumberAs` 1
         it "los resultados de sumas se redondean" $ do
