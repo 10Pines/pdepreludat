@@ -18,11 +18,19 @@ type WrappedNum = P.Double
 -- Funciones para convertir entre Number y los Num del Prelude
 
 numberToIntegral :: (P.Integral a) => Number -> a
-numberToIntegral (Number number) | isFractional roundedNumber = P.error notAnIntegralErrorMessage
-                                 | P.otherwise = P.floor roundedNumber
-    where isFractional numero = P.floor numero P./= P.ceiling numero
+numberToIntegral number = case rounded number of
+    Integer integer -> P.fromInteger integer
+    Decimal _ -> P.error $ "Se esperaba un valor entero pero se pasó uno con decimales: " P.++ P.show number
+
+-- El numero pero redondeado y ya conociendo si es entero o decimal
+
+data RoundedNumber = Integer P.Integer | Decimal WrappedNum
+
+rounded :: Number -> RoundedNumber
+rounded (Number number) | isFractional = Decimal roundedNumber
+                        | P.otherwise = Integer $ P.floor roundedNumber
+    where isFractional = P.floor roundedNumber P./= P.ceiling roundedNumber
           roundedNumber = roundWrappedNum number
-          notAnIntegralErrorMessage = "Se esperaba un valor entero pero se pasó uno con decimales: " P.++ P.show (Number number)
 
 numberToFractional :: (P.Fractional a) => Number -> a
 numberToFractional = P.realToFrac
@@ -63,4 +71,6 @@ instance P.Eq Number where
     Number a == Number b = roundWrappedNum a P.== roundWrappedNum b
 
 instance P.Show Number where
-    show (Number x) = P.show $ roundWrappedNum x
+    show number = case rounded number of
+        Integer integer -> P.show integer
+        Decimal decimal -> P.show decimal
