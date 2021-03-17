@@ -34,14 +34,22 @@ ifThenElse condition ifTrue ifFalse = case condition of
 -- Valor pensado para usarla como implementación por defecto de funciones
 -- o valores que pidamos que sean implementados en los ejercicios
 
+-- | Se puede usar en vez de una expresión que aun no se implementó.
+-- Tipa en cualquier lugar que se use pero al evaluarlo falla con un error de "Falta implementar."
 (...) :: a
 (...) = P.error "Falta implementar."
 
 -- Aliases utiles
 
+-- | Se puede usar en vez de una expresión que aun no se implementó.
+-- Tipa en cualquier lugar que se use pero al evaluarlo falla con un error de "Falta implementar."
+-- Alias de (...)
 implementame :: a
 implementame = (...)
 
+-- | Se puede usar en vez de una expresión que aun no se implementó.
+-- Tipa en cualquier lugar que se use pero al evaluarlo falla con un error de "Falta implementar."
+-- Alias de (...)
 arreglame :: a
 arreglame = (...)
 
