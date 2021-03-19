@@ -2,6 +2,7 @@ module Main where
 import PdePreludat
 import Test.Hspec
 import Control.Exception (evaluate)
+import qualified Prelude
 
 main :: IO ()
 main = hspec $ do
@@ -38,10 +39,43 @@ main = hspec $ do
         it "se redondea al usarse como parámetro de funciones que necesitan enteros" $ do
           take 0.9999999999 [1,2,3,4] `shouldBe` [1]
 
+    describe "enumFromThenTo" $ do
+      describe "cuando todos los numeros son enteros" $ do
+        it "devuelve una lista del primero al ultimo inclusive usando como salto entre cada numero la diferencia entre los dos primeros" $ do
+          [1, 2 .. 5] `shouldBe` [1, 2, 3, 4, 5]
+          [0, 2 .. 4] `shouldBe` [0, 2, 4]
+          [0, 2 .. 5] `shouldBe` [0, 2, 4]
+
+          [-1, -2 .. -5] `shouldBe` [-1, -2, -3, -4, -5]
+          [0, -2 .. -4] `shouldBe` [0, -2, -4]
+          [0, -2 .. -5] `shouldBe` [0, -2, -4]
+
+          [4, 3 .. 1] `shouldBe` [4 , 3, 2, 1]
+          [4, 2 .. 1] `shouldBe` [4 , 2]
+          [1 .. 10] `shouldBe` [1,2,3,4,5,6,7,8,9,10]
+      describe "cuando hay numeros decimales" $ do
+        -- El comportamiento de este caso está sacado de acá:
+        -- https://www.haskell.org/onlinereport/basic.html
+        -- For Float and Double, the semantics of the enumFrom family is given by the rules for Int above,
+        -- except that the list terminates when the elements become greater than e3+i/2 for positive increment i,
+        -- or when they become less than e3+i/2 for negative i.
+        it "devuelve una lista del primero al ultimo usando como salto entre cada numero la diferencia entre los dos primeros, la lista termina cuando aparece un elemento cuyo valor es más grande que el tercer parámetro + la mitad del salto" $ do
+          [1, 2 .. 5.5] `shouldBe` [1, 2, 3, 4, 5, 6]
+          [1, 2.5 .. 5.5] `shouldBe` [1, 2.5, 4, 5.5]
+          [0, 2 .. 5.5] `shouldBe` [0, 2, 4, 6]
+          [0, 2.5 .. 5.5] `shouldBe` [0, 2.5, 5]
+
+          [5, 4 .. 1.5] `shouldBe` [5, 4, 3, 2, 1]
+          [5.5, 4 .. 1.5] `shouldBe` [5.5, 4, 2.5, 1]
+          [5.5, 4 .. 1] `shouldBe` [5.5, 4, 2.5, 1]
+
+
+
 shouldBeTheSameNumberAs :: Number -> Number -> Expectation
 shouldBeTheSameNumberAs aNumber anotherNumber =
   (aNumber `shouldBe` anotherNumber) <>
   (aNumber < anotherNumber `shouldBe` False) <>
   (aNumber > anotherNumber `shouldBe` False)
 
+shouldThrowError :: a -> Expectation
 shouldThrowError expresion = evaluate expresion `shouldThrow` anyException

@@ -7,11 +7,11 @@ module Number (Number,
                integerToNumber,
                numberToFloat) where 
 
-import Prelude (($), (.))
+import Prelude (($), (.), (<$>))
 import qualified Prelude as P
 
 newtype Number = Number { wrappedNum :: WrappedNum }
-    deriving (P.RealFrac, P.Num, P.Real, P.Fractional, P.Enum, P.Floating) via WrappedNum
+    deriving (P.RealFrac, P.Num, P.Real, P.Fractional, P.Floating) via WrappedNum
 
 type WrappedNum = P.Double
 
@@ -31,6 +31,14 @@ rounded (Number number) | isFractional = Decimal roundedNumber
                         | P.otherwise = Integer $ P.floor roundedNumber
     where isFractional = P.floor roundedNumber P./= P.ceiling roundedNumber
           roundedNumber = roundWrappedNum number
+
+isInteger :: Number -> P.Bool
+isInteger number = case rounded number of
+    Integer _ -> P.True
+    Decimal _ -> P.False
+
+isDecimal :: Number -> P.Bool
+isDecimal  = P.not . isInteger
 
 numberToFractional :: (P.Fractional a) => Number -> a
 numberToFractional = P.realToFrac
@@ -74,3 +82,16 @@ instance P.Show Number where
     show number = case rounded number of
         Integer integer -> P.show integer
         Decimal decimal -> P.show decimal
+
+instance P.Enum Number where
+    toEnum integer = Number $ P.toEnum integer
+    fromEnum (Number n) = P.fromEnum n
+    enumFromThenTo first second last = case P.all isInteger [first, second, last] of
+        P.True -> fromInteger <$> P.enumFromThenTo
+                                        (numberToIntegral first)
+                                        (numberToIntegral second)
+                                        (numberToIntegral last)
+        P.False -> fromRational <$> P.enumFromThenTo
+                                        (numberToFractional first)
+                                        (numberToFractional second)
+                                        (numberToFractional last)
