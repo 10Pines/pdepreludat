@@ -39,7 +39,7 @@ concat = P.concat
 elem :: Eq a => a -> [a] -> Bool
 elem = P.elem
 
--- | Recibe una lista de numeros y retorna la sumatoria de los mismos.
+-- | Recibe una lista de números y retorna la sumatoria de los mismos.
 -- Si la lista esta vacía devuelve 0.
 --
 -- >>> sum []
@@ -49,7 +49,7 @@ elem = P.elem
 sum :: [Number] -> Number
 sum = P.sum
 
--- | Recibe una lista de numeros y retorna el producto de los mismos.
+-- | Recibe una lista de números y retorna el producto de los mismos.
 -- Si la lista esta vacía devuelve 1.
 --
 -- >>> product []
@@ -59,7 +59,7 @@ sum = P.sum
 product :: [Number] -> Number
 product = P.product
 
--- | Recibe una lista y nos retorna True si está vacía, y False si no.
+-- | Indica si una lista está vacía (no tiene elementos).
 --
 -- >>> null []
 -- True
@@ -252,7 +252,7 @@ concatMap = P.concatMap
 notElem :: (Eq a) => a -> [a] -> Bool
 notElem = P.notElem
 
--- | Recibe una lista de monadas y evalua cada valor de izquierda a derecha ignorando los resultados
+-- | Recibe una lista de mónadas y evalúa cada valor de izquierda a derecha ignorando los resultados
 -- Para una versión que no ignora los resultados, mirar 'sequence'.
 --
 -- >>> sequence_ [print 5, print 10]
@@ -262,7 +262,7 @@ sequence_ :: (Monad m) => [m a] -> m ()
 sequence_ = P.sequence_
 
 -- | Recibe una función que recibe un parámetro y devuelve una mónada, y una lista. Aplica la función a cada elemento,
--- evalua las monadas resultantes según el orden de la lista e ignora los resultados.
+-- evalúa las mónadas resultantes según el orden de la lista e ignora los resultados.
 -- Para una versión que no ignora los resultados, mirar 'mapM'.
 --
 -- >>> mapM_ print [5, 10]
@@ -300,7 +300,7 @@ infixl 7  /, `quot`, `rem`, `div`, `mod`
 -- 10
 -- 
 -- __OJO:__ en haskell, -5 puede significar una función que resta 5 o el número 5 negativo dependiendo del contexto.
--- Por ejemplo, si intentas hacer:
+-- Por ejemplo, si intentás hacer:
 --
 -- >>> 10 -5
 --
@@ -361,56 +361,170 @@ numerador / divisor = numerador P./ divisor
 
 -- | División entera.
 --
--- >>> 5 / 2
+-- Utilizando notación infija
+-- >>> 5 `div` 2
 -- 2
--- >>> 20 / 5
+--
+-- Utilizando notación prefija
+-- >>> div 20 5
 -- 4
 div :: Number -> Number -> Number
 div divisor dividendo = integralToNumber P.$
     P.div (numberToIntegral divisor) (numberToIntegral dividendo)
 
+-- | Indica si un número tiene decimales.
+-- 
+-- >>> isFractional 4
+-- False
+-- >>> isFractional 4.1
+-- True
 isFractional :: Number -> Bool
 isFractional numero = P.floor numero P./= P.ceiling numero
 
+
+-- | Devuelve el valor absoluto de un número.
+-- 
+-- >>> abs 2
+-- 2
+-- >>> abs (-2)
+-- 2
 abs :: Number -> Number
 abs = P.abs
 
+-- | Devuelve el signo de un número: 1 si es positivo, -1 si es negativo.
+-- 
+-- >>> signum 29
+-- 1
+-- >>> signum (-29)
+-- -1
 signum :: Number -> Number
 signum = P.signum
 
+-- | Cambia el signo de un número, si es positivo lo transforma a negativo y viceversa.
+-- 
+-- >>> negate 3
+-- -3
+-- >>> negate (-3)
+-- 3
 negate :: Number -> Number
 negate = P.negate
 
+-- | Indica si un número es par.
+-- 
+-- >>> even 7
+-- False
+-- >>> even 8
+-- True
 even :: Number -> Bool
 even numero = P.even (numberToIntegral numero)
 
+-- | Indica si un número es impar.
+-- 
+-- >>> odd 8
+-- False
+-- >>> odd 7
+-- True
 odd :: Number -> Bool
 odd numero = P.odd (numberToIntegral numero)
 
+-- | Dados dos números devuelve el mínimo común múltiplo.
+-- 
+-- Utilizando notación prefija
+-- >>> lcm 5 6
+-- 30
+-- 
+-- Utilizando notación infija
+-- >>> 6 `lcm` 4
+-- 12
 lcm :: Number -> Number -> Number
 lcm numero1 numero2 = integralToNumber(P.lcm (numberToIntegral numero1) (numberToIntegral numero2))
 
+-- | Dados dos números devuelve el máximo común divisor.
+-- 
+-- Utilizando notación prefija
+-- >>> gcd 5 6
+-- 1
+-- 
+-- Utilizando notación infija
+-- >>> 36 `gcd` 30
+-- 6
 gcd :: Number -> Number -> Number
 gcd numero1 numero2 = integralToNumber(P.gcd (numberToIntegral numero1) (numberToIntegral numero2))
 
+-- | Dado un número, devuelve el entero más cercano mayor a ese número.
+-- 
+-- >>> ceiling 5.1
+-- 6
+-- >>> ceiling 5
+-- 5
 ceiling :: Number -> Number
 ceiling numero = integralToNumber (P.ceiling numero)
 
+-- | Dado un número, devuelve el entero más cercano menor a ese número.
+-- 
+-- >>> floor 4.5
+-- 4
+-- >>> floor 4
+-- 4
 floor :: Number -> Number
 floor numero = integralToNumber (P.floor numero)
 
+-- | Dado un número, lo redondea a entero hacia arriba o abajo dependiendo de los decimales 
+-- (hasta 0.5 exclusive redondea hacia abajo, a partir de 0.5 redondea hacia arriba).
+-- 
+-- >>> round 5.5
+-- 6
+-- >>> round 5.9
+-- 6
+-- >>> round 5.1
+-- 5
 round :: Number -> Number
 round numero = integralToNumber (P.round numero)
 
+-- | Dado un número, le saca los decimales.
+-- 
+-- >>> truncate 5.9
+-- 5
+-- >>> truncate 5
+-- 5
 truncate :: Number -> Number
 truncate numero = integralToNumber (P.truncate numero)
 
 -- Redefiniciones de Números y listas
 
+-- | Elimina los primeros n elementos de una lista.
+-- 
+-- >>> take 4 [1..]
+-- [1, 2, 3, 4]
+-- >>> take 2 ["pasame", "el", "jabon", "no", "radio"]
+-- ["pasame","el"]
+-- >>> take -2 [5..8]
+-- []
+-- >>> take 3 []
+-- []
 take cantidad = P.take (numberToIntegral cantidad)
 
+-- | Devuelve el enésimo elemento de una lista, donde la primera posición ocupa el índice 0, 
+-- la segunda el índice 1, etc.
+-- 
+-- Utilizando notación prefija
+-- >>> (!!) [1..5] 2
+-- 3
+-- Utilizando notación infija
+-- >>> [1..5] !! 1
+-- 2
 lista !! posicion = lista P.!! (numberToIntegral posicion)
 
+
+-- | Devuelve los últimos n elementos
+-- la segunda el índice 1, etc.
+-- 
+-- Utilizando notación prefija
+-- >>> (!!) [1..5] 2
+-- 3
+-- Utilizando notación infija
+-- >>> [1..5] !! 1
+-- 2
 drop :: Number -> [a] -> [a]
 drop cantidad = P.drop (numberToIntegral cantidad)
 
