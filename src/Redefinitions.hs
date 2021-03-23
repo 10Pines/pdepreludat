@@ -590,34 +590,105 @@ mod :: Number -> Number -> Number
 mod unNumero otroNumero =
     integralToNumber P.$ P.mod (numberToIntegral unNumero) (numberToIntegral otroNumero)
 
+-- | Devuelve una tupla con el cociente y el resto que resulta de dividir dos números (el primero por el segundo).
+--
+-- Utilizando la notación prefija
+-- >>> quotRem 10 5
+-- (2, 0)
+--
+-- Utilizando notación infija
+-- >>> 11 `quotRem` 5
+-- (2, 1)
 quotRem :: Number -> Number -> (Number, Number)
 quotRem unNumero otroNumero =
     case P.quotRem (numberToIntegral unNumero) (numberToIntegral otroNumero) of
         (quot, rem) -> (integralToNumber quot, integralToNumber rem)
 
+-- | Devuelve una tupla con el cociente y el resto en módulo tras dividir dos números (el primero por el segundo).
+--
+-- Utilizando la notación prefija
+-- >>> divMod 11 3
+-- (3, 2)
+--
+-- Utilizando notación infija
+-- >>> 11 `divMod` (-3)
+-- (-4, -1)
 divMod :: Number -> Number -> (Number, Number)
 divMod unNumero otroNumero =
     case P.divMod (numberToIntegral unNumero) (numberToIntegral otroNumero) of
         (div, mod) -> (integralToNumber div, integralToNumber mod)
 
+-- | Constante matemática [pi](https://es.wikipedia.org/wiki/N%C3%BAmero_%CF%80)
+--
+-- >>>pi
+-- 3.141592654
 pi :: Number
 pi = P.pi
 
+-- | Devuelve el valor de la función exponencial e^x, pasando como parámetro la __x__
+--
+-- <<https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Exponentials.svg/1024px-Exponentials.svg.png>>
+--
+-- >>> exp 0
+-- 1
+--
+-- >>> exp 1
+-- 2.718281828
+--
+-- >>> exp 5
+-- 148.413159103
 exp :: Number -> Number
 exp = P.exp
 
+-- | Devuelve el logaritmo en base 10 de un número.
+--
+-- <<https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Graph_of_common_logarithm.svg/1200px-Graph_of_common_logarithm.svg.png>>
+-- 
+-- >>> log 149
+-- 5.003946306
 log :: Number -> Number
 log = P.log
 
+-- | Devuelve la raíz cuadrada de un número.
+-- 
+-- >>> sqrt 9
+-- 3
 sqrt :: Number -> Number
 sqrt = P.sqrt
 
+-- | Dados dos números, devuelve el primero elevado a la potencia del segundo.
+--
+-- Utilizando la notación infija
+-- >>> 5 ** 3
+-- 125
+--
+-- Utilizando la notación prefija
+-- >>> (**) 2 4
+-- 16
 (**) :: Number -> Number -> Number
 (**) = (P.**)
 
+-- | Dados dos números (__x__ e __y__), devuelve el logaritmo en base __x__ del número __y__.
+--
+-- <<https://cdn-amccl.nitrocdn.com/JSubMagokulfBnGCVBTqbGYgsRhlCXZq/assets/static/optimized/rev-2d1feb6/escuela/wp-content/uploads/2020/09/Logarithm_plots.png>>
+-- 
+-- >>> logBase 10 10
+-- 1
+-- 
+-- >>> logBase 10 100
+-- 2
 logBase :: Number -> Number -> Number
 logBase = P.logBase
 
+-- | Devuelve la función seno de un número.
+--
+-- <<https://www.montereyinstitute.org/courses/DevelopmentalMath/TEXTGROUP-15-19_RESOURCE/U19_L2_T2_text_final_files_es/image082.png>>
+--
+-- >>> sin pi
+-- 0
+--
+-- >>> sin (pi / 2)
+-- 1
 sin :: Number -> Number
 sin = P.sin
 
