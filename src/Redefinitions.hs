@@ -515,33 +515,77 @@ take cantidad = P.take (numberToIntegral cantidad)
 -- 2
 lista !! posicion = lista P.!! (numberToIntegral posicion)
 
-
--- | Devuelve los últimos n elementos
--- la segunda el índice 1, etc.
+-- | Elimina los primeros n elementos de una lista.
 -- 
--- Utilizando notación prefija
--- >>> (!!) [1..5] 2
--- 3
--- Utilizando notación infija
--- >>> [1..5] !! 1
--- 2
+-- >>> drop 3 [1..5]
+-- [4, 5]
+-- >>> drop 2 ["algo", "está", "por", "pasar"]
+-- ["por","pasar"]
 drop :: Number -> [a] -> [a]
 drop cantidad = P.drop (numberToIntegral cantidad)
 
+-- | Repite n veces un elemento generando una lista.
+-- 
+-- >>> replicate 5 "see"
+-- ["see","see","see","see","see"]
+-- >>> replicate 4 100
+-- [100, 100, 100, 100]
 replicate :: Number -> a -> [a]
 replicate veces = P.replicate (numberToIntegral veces)
 
+-- | Divide una lista en dos, a partir de una posición n (donde el primer elemento es
+-- la posición 0, el segundo elementos es la posición 1, etc). Los elementos hasta 
+-- la posición n - 1 ocuparán la primera lista y el resto estará en la segunda lista.
+--
+-- >>> splitAt 3 [1..10]
+-- ([1,2,3], [4,5,6,7,8,9,10])
+-- >>> splitAt 0 [1..10]
+-- ([], [1,2,3,4,5,6,7,8,9,10])
 splitAt :: Number -> [a] -> ([a], [a])
 splitAt posicion = P.splitAt (numberToIntegral posicion)
 
+-- | Devuelve el cociente entre dos números, es decir el resultado de dividir el primer
+-- número por el segundo.
+--
+-- Utilizando la notación prefija
+-- >>> quot 10 5
+-- 2
+--
+-- Utilizando notación infija
+-- >>> 12 `quot` 5
+-- 2
 quot :: Number -> Number -> Number
 quot unNumero otroNumero =
     integralToNumber P.$ P.quot (numberToIntegral unNumero) (numberToIntegral otroNumero)
 
+-- | Devuelve el resto de dividir dos números (el primero por el segundo).
+--
+-- Utilizando la notación prefija
+-- >>> rem 10 5
+-- 0
+--
+-- Utilizando notación infija
+-- >>> 11 `rem` 5
+-- 1
+--
+-- >>> 2 `rem` (-3)
+-- 2
 rem :: Number -> Number -> Number
 rem unNumero otroNumero =
     integralToNumber P.$ P.rem (numberToIntegral unNumero) (numberToIntegral otroNumero)
 
+-- | Devuelve el resto en módulo de dividir dos números (el primero por el segundo).
+--
+-- Utilizando la notación prefija
+-- >>> mod 10 5
+-- 0
+--
+-- Utilizando notación infija
+-- >>> 11 `mod` 5
+-- 1
+--
+-- >>> 2 `mod` (-3)
+-- -1
 mod :: Number -> Number -> Number
 mod unNumero otroNumero =
     integralToNumber P.$ P.mod (numberToIntegral unNumero) (numberToIntegral otroNumero)
