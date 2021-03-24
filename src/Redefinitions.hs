@@ -520,7 +520,7 @@ lista !! posicion = lista P.!! (numberToIntegral posicion)
 -- >>> drop 3 [1..5]
 -- [4, 5]
 -- >>> drop 2 ["algo", "está", "por", "pasar"]
--- ["por","pasar"]
+-- ["por", "pasar"]
 drop :: Number -> [a] -> [a]
 drop cantidad = P.drop (numberToIntegral cantidad)
 
@@ -620,7 +620,7 @@ divMod unNumero otroNumero =
 
 -- | Constante matemática [pi](https://es.wikipedia.org/wiki/N%C3%BAmero_%CF%80)
 --
--- >>>pi
+-- >>> pi
 -- 3.141592654
 pi :: Number
 pi = P.pi
@@ -692,35 +692,101 @@ logBase = P.logBase
 sin :: Number -> Number
 sin = P.sin
 
+-- | Devuelve la función coseno de un número.
+--
+-- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-coseno.jpg>>
+--
+-- >>> cos pi
+-- -1
+--
+-- >>> cos (pi / 2)
+-- 0
 cos :: Number -> Number
 cos = P.cos
 
+-- | Devuelve la función tangente de un número.
+--
+-- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-tangente.jpg>>
+--
+-- >>> tan pi
+-- 0
+--
+-- >>> tan (pi / 2)
+-- 16331239353195370
 tan :: Number -> Number
 tan = P.tan
 
+-- | Devuelve la función arcoseno de un número.
+--
+-- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcoseno-simetrica-seno.jpg>>
+--
+-- >>> asin 1
+-- 1.570796327
 asin :: Number -> Number
 asin = P.asin
 
+-- | Devuelve la función arcocoseno de un número.
+--
+-- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcocoseno-coseno.jpg>>
+--
+-- >>> acos 0
+-- 1.570796327
 acos :: Number -> Number
 acos = P.acos
 
+-- | Devuelve la función arcotangente de un número.
+--
+-- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcotangente-simetrica-tangente.jpg>>
+--
+-- >>> atan 1
+-- 0.785398163
 atan :: Number -> Number
 atan = P.atan
 
+-- | Devuelve la función seno hiperbólico de un número.
+--
+-- <<https://upload.wikimedia.org/wikipedia/commons/3/3a/Sinh_plot_real.png>>
+--
+-- >>> sinh 1
+-- 1.175201194
 sinh :: Number -> Number
 sinh = P.sinh
 
+-- | Devuelve la función coseno hiperbólico de un número.
+--
+-- <<https://miprofe.com/wp-content/uploads/2016/04/coseno-hiperbolico-273x300.png>>
+--
+-- >>> cosh 0
+-- 1
 cosh :: Number -> Number
 cosh = P.cosh
 
+-- | Devuelve la función tangente hiperbólica de un número.
+--
+-- <<https://miprofe.com/wp-content/uploads/2016/04/tangente-hiperbolica-274x300.png>>
+--
+-- >>> tanh 0
+-- 0
 tanh :: Number -> Number
 tanh = P.tanh
 
+-- | Devuelve la función arco seno hiperbólico de un número.
+--
+-- >>> asinh 1
+-- 0.881373587
 asinh :: Number -> Number
 asinh = P.asinh
 
+-- | Devuelve la función arco coseno hiperbólico de un número.
+--
+-- >>> acosh 1
+-- 0
 acosh :: Number -> Number
 acosh = P.acosh
 
+-- | Devuelve la función arco tangente hiperbólica de un número.
+--
+-- >>> atanh 0
+-- 0
 atanh :: Number -> Number
 atanh = P.atanh
