@@ -237,3 +237,7 @@ También, se pueden correr los tests usando:
 ```bash
 stack test
 ```
+
+### Guía para el desarrollador para documentar las funciones
+
+Para documentar cualquiera de las funciones utilizamos [Haddock](https://haskell-haddock.readthedocs.io/en/latest/markup.html)
