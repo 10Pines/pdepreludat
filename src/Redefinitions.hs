@@ -362,10 +362,12 @@ numerador / divisor = numerador P./ divisor
 -- | División entera.
 --
 -- Utilizando notación infija
+--
 -- >>> 5 `div` 2
 -- 2
 --
 -- Utilizando notación prefija
+--
 -- >>> div 20 5
 -- 4
 div :: Number -> Number -> Number
@@ -430,10 +432,12 @@ odd numero = P.odd (numberToIntegral numero)
 -- | Dados dos números devuelve el mínimo común múltiplo.
 -- 
 -- Utilizando notación prefija
+--
 -- >>> lcm 5 6
 -- 30
 -- 
 -- Utilizando notación infija
+--
 -- >>> 6 `lcm` 4
 -- 12
 lcm :: Number -> Number -> Number
@@ -442,10 +446,12 @@ lcm numero1 numero2 = integralToNumber(P.lcm (numberToIntegral numero1) (numberT
 -- | Dados dos números devuelve el máximo común divisor.
 -- 
 -- Utilizando notación prefija
+--
 -- >>> gcd 5 6
 -- 1
 -- 
 -- Utilizando notación infija
+--
 -- >>> 36 `gcd` 30
 -- 6
 gcd :: Number -> Number -> Number
@@ -492,7 +498,7 @@ truncate numero = integralToNumber (P.truncate numero)
 
 -- Redefiniciones de Números y listas
 
--- | Elimina los primeros n elementos de una lista.
+-- | Dado un numero `n` y una lista, retorna los primeros `n` elementos de esa lista.
 -- 
 -- >>> take 4 [1..]
 -- [1, 2, 3, 4]
@@ -502,29 +508,35 @@ truncate numero = integralToNumber (P.truncate numero)
 -- []
 -- >>> take 3 []
 -- []
+take :: Number -> [a] -> [a]
 take cantidad = P.take (numberToIntegral cantidad)
 
 -- | Devuelve el enésimo elemento de una lista, donde la primera posición ocupa el índice 0, 
 -- la segunda el índice 1, etc.
 -- 
 -- Utilizando notación prefija
+--
 -- >>> (!!) [1..5] 2
 -- 3
+--
 -- Utilizando notación infija
+--
 -- >>> [1..5] !! 1
 -- 2
+(!!) :: [a] -> Number -> a
 lista !! posicion = lista P.!! (numberToIntegral posicion)
 
--- | Elimina los primeros n elementos de una lista.
+-- | Dado un numero `n` y una lista, devuelve la lista sin los primeros `n` elementos.
 -- 
 -- >>> drop 3 [1..5]
 -- [4, 5]
+--
 -- >>> drop 2 ["algo", "está", "por", "pasar"]
 -- ["por", "pasar"]
 drop :: Number -> [a] -> [a]
 drop cantidad = P.drop (numberToIntegral cantidad)
 
--- | Repite n veces un elemento generando una lista.
+-- | Repite `n` veces un elemento generando una lista.
 -- 
 -- >>> replicate 5 "see"
 -- ["see","see","see","see","see"]
@@ -533,12 +545,13 @@ drop cantidad = P.drop (numberToIntegral cantidad)
 replicate :: Number -> a -> [a]
 replicate veces = P.replicate (numberToIntegral veces)
 
--- | Divide una lista en dos, a partir de una posición n (donde el primer elemento es
+-- | Divide una lista en dos, a partir de una posición `n` (donde el primer elemento es
 -- la posición 0, el segundo elementos es la posición 1, etc). Los elementos hasta 
 -- la posición n - 1 ocuparán la primera lista y el resto estará en la segunda lista.
 --
 -- >>> splitAt 3 [1..10]
 -- ([1,2,3], [4,5,6,7,8,9,10])
+--
 -- >>> splitAt 0 [1..10]
 -- ([], [1,2,3,4,5,6,7,8,9,10])
 splitAt :: Number -> [a] -> ([a], [a])
@@ -548,10 +561,12 @@ splitAt posicion = P.splitAt (numberToIntegral posicion)
 -- número por el segundo.
 --
 -- Utilizando la notación prefija
+--
 -- >>> quot 10 5
 -- 2
 --
 -- Utilizando notación infija
+--
 -- >>> 12 `quot` 5
 -- 2
 quot :: Number -> Number -> Number
@@ -561,10 +576,12 @@ quot unNumero otroNumero =
 -- | Devuelve el resto de dividir dos números (el primero por el segundo).
 --
 -- Utilizando la notación prefija
+--
 -- >>> rem 10 5
 -- 0
 --
 -- Utilizando notación infija
+--
 -- >>> 11 `rem` 5
 -- 1
 --
@@ -577,10 +594,12 @@ rem unNumero otroNumero =
 -- | Devuelve el resto en módulo de dividir dos números (el primero por el segundo).
 --
 -- Utilizando la notación prefija
+--
 -- >>> mod 10 5
 -- 0
 --
 -- Utilizando notación infija
+--
 -- >>> 11 `mod` 5
 -- 1
 --
@@ -593,10 +612,12 @@ mod unNumero otroNumero =
 -- | Devuelve una tupla con el cociente y el resto que resulta de dividir dos números (el primero por el segundo).
 --
 -- Utilizando la notación prefija
+--
 -- >>> quotRem 10 5
 -- (2, 0)
 --
 -- Utilizando notación infija
+--
 -- >>> 11 `quotRem` 5
 -- (2, 1)
 quotRem :: Number -> Number -> (Number, Number)
@@ -607,10 +628,12 @@ quotRem unNumero otroNumero =
 -- | Devuelve una tupla con el cociente y el resto en módulo tras dividir dos números (el primero por el segundo).
 --
 -- Utilizando la notación prefija
+--
 -- >>> divMod 11 3
 -- (3, 2)
 --
 -- Utilizando notación infija
+--
 -- >>> 11 `divMod` (-3)
 -- (-4, -1)
 divMod :: Number -> Number -> (Number, Number)
@@ -659,10 +682,12 @@ sqrt = P.sqrt
 -- | Dados dos números, devuelve el primero elevado a la potencia del segundo.
 --
 -- Utilizando la notación infija
+--
 -- >>> 5 ** 3
 -- 125
 --
 -- Utilizando la notación prefija
+--
 -- >>> (**) 2 4
 -- 16
 (**) :: Number -> Number -> Number
@@ -680,7 +705,7 @@ sqrt = P.sqrt
 logBase :: Number -> Number -> Number
 logBase = P.logBase
 
--- | Devuelve la función seno de un número.
+-- | Devuelve el seno de un número.
 --
 -- <<https://www.montereyinstitute.org/courses/DevelopmentalMath/TEXTGROUP-15-19_RESOURCE/U19_L2_T2_text_final_files_es/image082.png>>
 --
@@ -692,7 +717,7 @@ logBase = P.logBase
 sin :: Number -> Number
 sin = P.sin
 
--- | Devuelve la función coseno de un número.
+-- | Devuelve el coseno de un número.
 --
 -- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-coseno.jpg>>
 --
@@ -704,7 +729,7 @@ sin = P.sin
 cos :: Number -> Number
 cos = P.cos
 
--- | Devuelve la función tangente de un número.
+-- | Devuelve la tangente de un número.
 --
 -- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-tangente.jpg>>
 --
@@ -716,7 +741,7 @@ cos = P.cos
 tan :: Number -> Number
 tan = P.tan
 
--- | Devuelve la función arcoseno de un número.
+-- | Devuelve el arcoseno de un número.
 --
 -- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcoseno-simetrica-seno.jpg>>
 --
@@ -725,7 +750,7 @@ tan = P.tan
 asin :: Number -> Number
 asin = P.asin
 
--- | Devuelve la función arcocoseno de un número.
+-- | Devuelve el arcocoseno de un número.
 --
 -- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcocoseno-coseno.jpg>>
 --
@@ -734,7 +759,7 @@ asin = P.asin
 acos :: Number -> Number
 acos = P.acos
 
--- | Devuelve la función arcotangente de un número.
+-- | Devuelve el arcotangente de un número.
 --
 -- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcotangente-simetrica-tangente.jpg>>
 --
@@ -743,7 +768,7 @@ acos = P.acos
 atan :: Number -> Number
 atan = P.atan
 
--- | Devuelve la función seno hiperbólico de un número.
+-- | Devuelve el seno hiperbólico de un número.
 --
 -- <<https://upload.wikimedia.org/wikipedia/commons/3/3a/Sinh_plot_real.png>>
 --
@@ -752,7 +777,7 @@ atan = P.atan
 sinh :: Number -> Number
 sinh = P.sinh
 
--- | Devuelve la función coseno hiperbólico de un número.
+-- | Devuelve el coseno hiperbólico de un número.
 --
 -- <<https://miprofe.com/wp-content/uploads/2016/04/coseno-hiperbolico-273x300.png>>
 --
@@ -761,7 +786,7 @@ sinh = P.sinh
 cosh :: Number -> Number
 cosh = P.cosh
 
--- | Devuelve la función tangente hiperbólica de un número.
+-- | Devuelve la tangente hiperbólica de un número.
 --
 -- <<https://miprofe.com/wp-content/uploads/2016/04/tangente-hiperbolica-274x300.png>>
 --
@@ -770,21 +795,21 @@ cosh = P.cosh
 tanh :: Number -> Number
 tanh = P.tanh
 
--- | Devuelve la función arco seno hiperbólico de un número.
+-- | Devuelve el arcoseno hiperbólico de un número.
 --
 -- >>> asinh 1
 -- 0.881373587
 asinh :: Number -> Number
 asinh = P.asinh
 
--- | Devuelve la función arco coseno hiperbólico de un número.
+-- | Devuelve el arcocoseno hiperbólico de un número.
 --
 -- >>> acosh 1
 -- 0
 acosh :: Number -> Number
 acosh = P.acosh
 
--- | Devuelve la función arco tangente hiperbólica de un número.
+-- | Devuelve el arcotangente hiperbólica de un número.
 --
 -- >>> atanh 0
 -- 0
