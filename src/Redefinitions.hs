@@ -650,7 +650,7 @@ pi = P.pi
 
 -- | Devuelve el valor de la función exponencial e^x, pasando como parámetro la __x__
 --
--- <<https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Exponentials.svg/1024px-Exponentials.svg.png>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/exp.png>>
 --
 -- >>> exp 0
 -- 1
@@ -665,7 +665,7 @@ exp = P.exp
 
 -- | Devuelve el logaritmo en base 10 de un número.
 --
--- <<https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Graph_of_common_logarithm.svg/1200px-Graph_of_common_logarithm.svg.png>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/log.png>>
 -- 
 -- >>> log 149
 -- 5.003946306
@@ -695,7 +695,7 @@ sqrt = P.sqrt
 
 -- | Dados dos números (__x__ e __y__), devuelve el logaritmo en base __x__ del número __y__.
 --
--- <<https://cdn-amccl.nitrocdn.com/JSubMagokulfBnGCVBTqbGYgsRhlCXZq/assets/static/optimized/rev-2d1feb6/escuela/wp-content/uploads/2020/09/Logarithm_plots.png>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/logBase.png>>
 -- 
 -- >>> logBase 10 10
 -- 1
@@ -707,7 +707,7 @@ logBase = P.logBase
 
 -- | Devuelve el seno de un número.
 --
--- <<https://www.montereyinstitute.org/courses/DevelopmentalMath/TEXTGROUP-15-19_RESOURCE/U19_L2_T2_text_final_files_es/image082.png>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/sin.png>>
 --
 -- >>> sin pi
 -- 0
@@ -719,7 +719,7 @@ sin = P.sin
 
 -- | Devuelve el coseno de un número.
 --
--- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-coseno.jpg>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/cos.png>>
 --
 -- >>> cos pi
 -- -1
@@ -731,7 +731,7 @@ cos = P.cos
 
 -- | Devuelve la tangente de un número.
 --
--- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-tangente.jpg>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/tan.png>>
 --
 -- >>> tan pi
 -- 0
@@ -743,7 +743,7 @@ tan = P.tan
 
 -- | Devuelve el arcoseno de un número.
 --
--- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcoseno-simetrica-seno.jpg>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/asin.png>>
 --
 -- >>> asin 1
 -- 1.570796327
@@ -752,7 +752,7 @@ asin = P.asin
 
 -- | Devuelve el arcocoseno de un número.
 --
--- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcocoseno-coseno.jpg>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/acos.png>>
 --
 -- >>> acos 0
 -- 1.570796327
@@ -761,7 +761,7 @@ acos = P.acos
 
 -- | Devuelve el arcotangente de un número.
 --
--- <<https://www.universoformulas.com/imagenes/matematicas/trigonometria/grafica-arcotangente-simetrica-tangente.jpg>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/atan.png>>
 --
 -- >>> atan 1
 -- 0.785398163
@@ -770,7 +770,7 @@ atan = P.atan
 
 -- | Devuelve el seno hiperbólico de un número.
 --
--- <<https://upload.wikimedia.org/wikipedia/commons/3/3a/Sinh_plot_real.png>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/sinh.png>>
 --
 -- >>> sinh 1
 -- 1.175201194
@@ -779,7 +779,7 @@ sinh = P.sinh
 
 -- | Devuelve el coseno hiperbólico de un número.
 --
--- <<https://miprofe.com/wp-content/uploads/2016/04/coseno-hiperbolico-273x300.png>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/cosh.png>>
 --
 -- >>> cosh 0
 -- 1
@@ -788,7 +788,7 @@ cosh = P.cosh
 
 -- | Devuelve la tangente hiperbólica de un número.
 --
--- <<https://miprofe.com/wp-content/uploads/2016/04/tangente-hiperbolica-274x300.png>>
+-- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/tanh.png>>
 --
 -- >>> tanh 0
 -- 0
