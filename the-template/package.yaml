@@ -22,6 +22,7 @@ description:         Please see the README on GitHub at <https://github.com/gith
 dependencies:
 - base >= 4.7 && < 5
 - pdeprelude
+- hspec
 
 default-extensions:
   - NoImplicitPrelude
@@ -34,7 +35,7 @@ library:
 
 tests:
   the-template-test:
-    main:                Spec.hs
+    main:                CorrerTests.hs
     source-dirs:         test
     ghc-options:
     - -threaded
@@ -42,4 +43,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - the-template
-    - hspec
+
