@@ -238,6 +238,7 @@ También, se pueden correr los tests usando:
 stack test
 ```
 
-### Guía para el desarrollador para documentar las funciones
+### Para el desarrollador
 
-Para documentar cualquiera de las funciones utilizamos [Haddock](https://haskell-haddock.readthedocs.io/en/latest/markup.html)
+Podés ver la [wiki](https://github.com/10Pines/pdepreludat/wiki)
+
