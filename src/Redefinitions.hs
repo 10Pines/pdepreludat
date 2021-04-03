@@ -88,8 +88,8 @@ null = P.null
 --
 -- 1 + (2 + (3 + (4 + (5 + 0))))
 --
--- Si queres leer más sobre esta familia de funciones, podes consultar acá:
--- https://wiki.uqbar.org/wiki/articles/fold.html
+-- Si queres leer más sobre esta familia de funciones, podes
+-- consultar [acá](https:\/\/wiki.uqbar.org\/wiki\/articles\/fold.html)
 --
 -- __OJO:__ ¡recordá que el tipo de retorno del fold es del mismo tipo que la semilla!
 --
@@ -138,8 +138,8 @@ foldr1 = P.foldr1
 --
 -- ((((0 + 1) + 2) + 3) + 4) + 5
 --
--- Si queres leer más sobre esta familia de funciones, podes consultar acá:
--- https://wiki.uqbar.org/wiki/articles/fold.html
+-- Si queres leer más sobre esta familia de funciones, podes
+-- consultar [acá](https:\/\/wiki.uqbar.org\/wiki\/articles\/fold.html)
 --
 -- __OJO:__ ¡recordá que el tipo de retorno del fold es del mismo tipo que la semilla!
 --
@@ -641,7 +641,7 @@ divMod unNumero otroNumero =
     case P.divMod (numberToIntegral unNumero) (numberToIntegral otroNumero) of
         (div, mod) -> (integralToNumber div, integralToNumber mod)
 
--- | Constante matemática [pi](https://es.wikipedia.org/wiki/N%C3%BAmero_%CF%80)
+-- | Constante matemática [pi](https:\/\/es.wikipedia.org\/wiki\/N%C3%BAmero_%CF%80)
 --
 -- >>> pi
 -- 3.141592654
@@ -650,8 +650,7 @@ pi = P.pi
 
 -- | Devuelve el valor de la función exponencial e^x, pasando como parámetro la __x__
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/exp.png>>
---
+-- ![Gráfico de la funcion exponencial](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/exp.png)
 -- >>> exp 0
 -- 1
 --
@@ -665,7 +664,7 @@ exp = P.exp
 
 -- | Devuelve el logaritmo en base 10 de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/log.png>>
+-- ![Gráfico de la funcion logaritmo base 10](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/log.png)
 -- 
 -- >>> log 149
 -- 5.003946306
@@ -695,7 +694,7 @@ sqrt = P.sqrt
 
 -- | Dados dos números (__x__ e __y__), devuelve el logaritmo en base __x__ del número __y__.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/logBase.png>>
+-- ![Gráfico de la función logaritmo](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/logBase.png)
 -- 
 -- >>> logBase 10 10
 -- 1
@@ -707,7 +706,7 @@ logBase = P.logBase
 
 -- | Devuelve el seno de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/sin.png>>
+-- ![Gráfico de la función seno](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/sin.png)
 --
 -- >>> sin pi
 -- 0
@@ -719,7 +718,7 @@ sin = P.sin
 
 -- | Devuelve el coseno de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/cos.png>>
+-- ![Gráfico de la función coseno](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/cos.png)
 --
 -- >>> cos pi
 -- -1
@@ -731,7 +730,7 @@ cos = P.cos
 
 -- | Devuelve la tangente de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/tan.png>>
+-- ![Gráfico de la función ](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/tan.png)
 --
 -- >>> tan pi
 -- 0
@@ -743,7 +742,7 @@ tan = P.tan
 
 -- | Devuelve el arcoseno de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/asin.png>>
+-- ![Gráfico de la función arcoseno](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/asin.png)
 --
 -- >>> asin 1
 -- 1.570796327
@@ -752,7 +751,7 @@ asin = P.asin
 
 -- | Devuelve el arcocoseno de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/acos.png>>
+-- ![Gráfico de la función arcocoseno](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/acos.png)
 --
 -- >>> acos 0
 -- 1.570796327
@@ -761,7 +760,7 @@ acos = P.acos
 
 -- | Devuelve el arcotangente de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/atan.png>>
+-- ![Gráfico de la función arcotangente](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/atan.png)
 --
 -- >>> atan 1
 -- 0.785398163
@@ -770,7 +769,7 @@ atan = P.atan
 
 -- | Devuelve el seno hiperbólico de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/sinh.png>>
+-- ![Gráfico de la función seno hiperbólico](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/sinh.png)
 --
 -- >>> sinh 1
 -- 1.175201194
@@ -779,7 +778,7 @@ sinh = P.sinh
 
 -- | Devuelve el coseno hiperbólico de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/cosh.png>>
+-- ![Gráfico de la función coseno hiperbólico](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/cosh.png)
 --
 -- >>> cosh 0
 -- 1
@@ -788,7 +787,7 @@ cosh = P.cosh
 
 -- | Devuelve la tangente hiperbólica de un número.
 --
--- <<https://raw.githubusercontent.com/10Pines/pdepreludat/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c/images/tanh.png>>
+-- ![Gráfico de la función tangente hiperbólica](https:\/\/raw.githubusercontent.com\/10Pines\/pdepreludat\/f7678b7c0da45d2a9c7a4d0b00380f45b8457a1c\/images\/tanh.png)
 --
 -- >>> tanh 0
 -- 0
