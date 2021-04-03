@@ -5,7 +5,7 @@ module Redefinitions where
 -- Listas
 -- usamos [] en lugar de Foldable t => t
 
-import Prelude (Bool, Show, Ord, Eq, Monad, Enum, (.), (==))
+import Prelude (Bool, Show, Ord, Eq, Monad, Enum, (==))
 import qualified Prelude as P
 import Number
 
@@ -815,3 +815,183 @@ acosh = P.acosh
 -- 0
 atanh :: Number -> Number
 atanh = P.atanh
+
+-- | La aplicación de funciones
+-- 
+-- Recibe una función y un parámetro y la aplica, es equivalente a
+-- escribir la función seguida de un parámetro por espacio.
+-- 
+-- >>> even $ 2
+-- True
+--
+-- Puede ser util en combinacion con funciones de orden superior:
+--
+-- >>> map ($ "hola") [take 2, drop 2]
+-- ["ho", "la"]
+infixr 0 $
+($) :: (a -> b) -> a -> b
+($) = (P.$)
+
+-- | La concatenación de listas
+--
+-- >>> [1,2,3] ++ [4,5,6]
+-- [1,2,3,4,5,6]
+--
+-- >>> "pero el " ++ "te" ++ "ma to" ++ "davia da" ++ " para " ++ "mas"
+-- "pero el tema todavia da para mas"
+infixr 5 ++
+(++) :: [a] -> [a] -> [a] 
+(++) = (P.++)
+
+infixr 9 .
+(.) :: (b -> c) -> (a -> b) -> a -> c
+(.) = (P..)
+
+-- | Dada una condicion y una lista de elementos, devuelve otra lista
+-- solo con aquellos elementos que cumplen la condicion.
+--
+-- >>> filter even [1,2,3,4,5,6,7,8]
+-- [2,4,6,8]
+-- >>> filter ((<4).length) ["hola", "que", "tal"]
+-- ["que", "tal"]
+filter :: (a -> Bool) -> [a] -> [a]
+filter = P.filter
+
+-- | Recibe una función de dos parámetros y devuelve la misma función
+-- pero con los parámetros en el orden opuesto
+--
+-- >>> flip (++) "hola" "mundo"
+-- "mundohola"
+-- >>> flip take "ahora" 2
+-- "ah"
+flip :: (a -> b -> c) -> b -> a -> c
+flip = P.flip
+
+-- | Devuelve el primer elemento de una tupla
+--
+-- >>> fst (5, 0)
+-- 5
+-- >> fst (4, "Copas")
+-- 4
+fst :: (a, b) -> a
+fst = P.fst
+
+-- | Devuelve el primer elemento de una lista
+--
+-- Falla si la lista está vacía.
+--
+-- >>> head [0,1,2,3]
+-- 0
+-- >>> head "arbol"
+-- 'a'
+head :: [a] -> a
+head = P.head
+
+-- | Función identidad.
+--
+-- Devuelve lo mismo que se le pase
+--
+-- >>> id 42
+-- 42
+-- >>> id True
+-- True
+id :: a -> a
+id = P.id
+
+-- | Devuelve todos los elementos de una lista excepto el último
+--
+-- Falla si la lista está vacía.
+--
+-- >>> init [0,1,2,3]
+-- [0,1,2]
+-- >>> init "mesa"
+-- "mes"
+init :: [a] -> [a]
+init = P.init
+
+-- | Devuelve el último elemento de una lista
+--
+-- Falla si la lista está vacía.
+--
+-- >>> last [0,1,2,3]
+-- 3
+-- >>> last "arbol"
+-- 'l'
+last :: [a] -> a
+last = P.last
+
+-- | Recibe una función y una lista
+--
+-- Aplica la función a cada elemento de la lista y retorna la lista resultante.
+--
+-- >>> map (+3) [1,2,3]
+-- [4,5,6]
+-- >> map head ["paradigmas", "de", "programacion"]
+-- "pdp"
+map :: (a -> b) -> [a] -> [b]
+map = P.map
+
+-- | Dado un booleano, devuelve su opuesto
+--
+-- >>> not True
+-- False
+-- >>> not False
+-- True
+not :: Bool -> Bool
+not = P.not
+
+-- | otherwise está definido como el valor True.
+--
+-- Ayuda a hacer las guardas más expresivas:
+--
+-- @
+-- f x | x < 0     = ...
+--     | otherwise = ...
+-- @
+otherwise :: Bool
+otherwise = P.otherwise
+
+-- | Devuelve el primer elemento de una tupla
+--
+-- >>> snd (5, 0)
+-- 5
+-- >> snd (4, "Copas")
+-- "Copas"
+snd :: (a, b) -> b
+snd = P.snd
+
+-- | Devuelve todos los elementos menos el primero de una lista
+--
+-- Falla si la lista está vacía.
+--
+-- >>> tail [0,1,2,3]
+-- [1,2,3]
+-- >>> tail "arbol"
+-- "rbol"
+tail :: [a] -> [a]
+tail = P.tail
+
+-- | Toma dos listas y devuelve una lista de tuplas hechas con pares de elementos de esas listas.
+--
+-- >>> zip [1, 2] ['a', 'b']
+-- [(1, 'a'), (2, 'b')]
+--
+-- Si alguna de las listas es más corta que la otra, ignora los elementos adicionales de la lista más larga
+--
+-- >>> zip [1] ['a', 'b']
+-- [(1, 'a')]
+-- >>> zip [1, 2] ['a']
+-- [(1, 'a')]
+zip :: [a] -> [b] -> [(a, b)]
+zip = P.zip
+
+-- | Recibe una función que espera dos elementos y dos listas.
+--
+-- Aplica la función con un elemento de cada lista y retorna los resultados.
+--
+-- >>> zipWith (+) [1,2,3] [0,5,10]
+-- [1,7,13]
+-- >>> zipWith take [1,2,3] ["hola", "como", "estas"]
+-- ["h", "co", "est"]
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith = P.zipWith
