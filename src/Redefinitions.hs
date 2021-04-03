@@ -243,11 +243,11 @@ concatMap = P.concatMap
 -- Recibe un valor de algún tipo equiparable, una lista con elementos de ese tipo
 -- y me dice si el elemento __no__ está en la lista.
 --
--- >>> elem "hola" ["hola", "chau"]
+-- >>> notElem "hola" ["hola", "chau"]
 -- False
--- >>> elem 1 [0, 2, 4]
+-- >>> notElem 1 [0, 2, 4]
 -- True
--- >>> elem 1 []
+-- >>> notElem 1 []
 -- True
 notElem :: (Eq a) => a -> [a] -> Bool
 notElem = P.notElem
