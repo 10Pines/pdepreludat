@@ -170,7 +170,6 @@ Se agregó la función `toFloat` para convertir enteros a decimales, ya que cree
 
 ## Mensajes de error si se trata de usar una función como un comparable o equiparable
 
-
 ### Antes
 
 ```haskell
@@ -194,6 +193,11 @@ Se agregó la función `toFloat` para convertir enteros a decimales, ya que cree
     • In the expression: filter == map
       In an equation for ‘it’: it = filter == map
 ```
+
+## Agregada documentación en español de varias funciones
+
+![Ejemplo en el que al pasar el mouse sobre funciones del PdePreludat se ve la documentacion de las mismas](https://user-images.githubusercontent.com/11432672/113488290-6923f680-9493-11eb-8728-ea5fc12b3a28.gif)
+
 
 ## Para usarlo en un nuevo proyecto
 
