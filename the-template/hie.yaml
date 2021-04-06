@@ -1,7 +1,2 @@
 cradle:
   stack:
-    - path: "./src"
-      component: "the-template:lib"
-
-    - path: "./test"
-      component: "the-template:test:the-template-test"
