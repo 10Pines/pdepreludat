@@ -38,3 +38,13 @@ jobs:
           enable-stack: true
           stack-version: '2.5.1'
       - run: stack test
+      - run: ./build_hsfiles.sh > pdepreludat.hsfiles
+      - name: upload pdepreludat.hsfiles
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./pdepreludat.hsfiles
+          asset_name: pdepreludat.hsfiles
+          asset_content_type: text/plain
