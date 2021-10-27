@@ -45,10 +45,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: Draft
+          release_name: Draft
           draft: true
-          prerelease: true
+          prerelease: false
       - name: upload pdepreludat.hsfiles
         uses: actions/upload-release-asset@v1
         env:
