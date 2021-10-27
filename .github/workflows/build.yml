@@ -41,7 +41,7 @@ jobs:
       - run: ./build_hsfiles.sh > pdepreludat.hsfiles
       - name: Get release
         id: get_release
-        uses: agners/get-draft-release@v0.1.0
+        uses: agners/get-draft-release
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: upload pdepreludat.hsfiles
