@@ -2,6 +2,7 @@
 
 [![build](https://github.com/10Pines/pdepreludat/actions/workflows/build.yml/badge.svg)](https://github.com/10Pines/pdepreludat/actions/workflows/build.yml)
 
+
 Pdepreludat es una biblioteca que busca hacer más amigable y didáctico al Prelude de haskell, por ejemplo mejorando ciertos mensajes de error.
 
 La biblioteca exporta un modulo que contiene la mayoría de las funciones existentes en el Prelude, con ciertas modificaciones:
