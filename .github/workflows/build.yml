@@ -39,17 +39,22 @@ jobs:
           stack-version: '2.5.1'
       - run: stack test
       - run: ./build_hsfiles.sh > pdepreludat.hsfiles
-      - name: Get release
-        id: get_release
-        uses: agners/get-draft-release@v1.2.2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: false
       - name: upload pdepreludat.hsfiles
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./pdepreludat.hsfiles
           asset_name: pdepreludat.hsfiles
           asset_content_type: text/plain
