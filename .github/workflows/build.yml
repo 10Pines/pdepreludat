@@ -44,8 +44,11 @@ on:
     tags:
       - '*'
 
-  jobs:
-    updatehsfiles:
+jobs:
+  updatehsfiles:
+    name: Upload Base HS Files
+    runs-on: ubuntu-latest # or macOS-latest, or windows-latest
+    steps:
       - run: ./build_hsfiles.sh > pdepreludat.hsfiles
       - name: Create Release
         id: create_release
