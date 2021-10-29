@@ -38,3 +38,12 @@ jobs:
           enable-stack: true
           stack-version: '2.5.1'
       - run: stack test
+      - run: ./build_hsfiles.sh > pdepreludat.hsfiles
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "draft"
+          prerelease: true
+          title: "Draft"
+          files: |
+            pdepreludat.hsfiles
