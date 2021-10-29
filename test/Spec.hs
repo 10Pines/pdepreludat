@@ -1,6 +1,7 @@
 module Main where
 import PdePreludat
 import Test.Hspec
+import Data.Char
 import Control.Exception (evaluate)
 import qualified Prelude
 
@@ -69,7 +70,12 @@ main = hspec $ do
           [5.5, 4 .. 1.5] `shouldBe` [5.5, 4, 2.5, 1]
           [5.5, 4 .. 1] `shouldBe` [5.5, 4, 2.5, 1]
 
-
+        describe "sumOf => sum de orden superior" $ do
+          it "devuelve 0 para una lista vacía" $ do
+            sumOf length [] `shouldBe` 0
+          it "aplica la función para una lista con elementos" $ do
+            sumOf length ["abracadabra", "pata", "de", "cabra"] `shouldBe` 22
+            sumOf (integralToNumber . ord . head) ["abracadabra", "pata"] `shouldBe` 209
 
 shouldBeTheSameNumberAs :: Number -> Number -> Expectation
 shouldBeTheSameNumberAs aNumber anotherNumber =

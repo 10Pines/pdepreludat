@@ -49,6 +49,19 @@ elem = P.elem
 sum :: [Number] -> Number
 sum = P.sum
 
+-- | Recibe una función que transforma un elemento en un número,
+-- una lista y retorna la sumatoria de los mismos.
+--
+-- Si la lista esta vacía devuelve 0.
+--
+-- >>> sumOf length []
+-- 0
+-- >>> sumOf length ["abracadabra", "pata", "de", "cabra"]
+-- 22
+sumOf :: (a -> Number) -> [a] -> Number
+sumOf totalFunction = P.sum . P.map totalFunction
+
+
 -- | Recibe una lista de números y retorna el producto de los mismos.
 -- Si la lista esta vacía devuelve 1.
 --
