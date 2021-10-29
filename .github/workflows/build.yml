@@ -38,13 +38,15 @@ jobs:
           enable-stack: true
           stack-version: '2.5.1'
       - run: stack test
-      - run: ./build_hsfiles.sh > pdepreludat.hsfiles
       
 on:
   push:
     tags:
+      - '*'
+
   jobs:
     updatehsfiles:
+      - run: ./build_hsfiles.sh > pdepreludat.hsfiles
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
