@@ -31,10 +31,9 @@ jobs:
               ${{ runner.os }}-stack-work-${{ matrix.plan.ghc }}
       # end cache configuration
       - uses: actions/checkout@v2
-      - uses: actions/setup-haskell@v1.1.3
+      - uses: haskell/actions/setup@v1
         with:
-          ghc-version: '9.0.1' # Exact version of ghc to use
           # cabal-version: 'latest'. Omitted, but defalts to 'latest'
           enable-stack: true
-          stack-version: '2.5.1'
+          stack-version: 'latest'
       - run: stack test
