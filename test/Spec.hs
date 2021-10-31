@@ -1,7 +1,6 @@
 module Main where
 import PdePreludat
 import Test.Hspec
-import Data.Char
 import Control.Exception (evaluate)
 import qualified Prelude
 
@@ -75,7 +74,6 @@ main = hspec $ do
             sumOf length [] `shouldBe` 0
           it "aplica la función para una lista con elementos" $ do
             sumOf length ["abracadabra", "pata", "de", "cabra"] `shouldBe` 22
-            sumOf (integralToNumber . ord . head) ["abracadabra", "pata"] `shouldBe` 209
 
 shouldBeTheSameNumberAs :: Number -> Number -> Expectation
 shouldBeTheSameNumberAs aNumber anotherNumber =
