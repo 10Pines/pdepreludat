@@ -31,7 +31,7 @@ jobs:
               ${{ runner.os }}-stack-work-${{ matrix.plan.ghc }}
       # end cache configuration
       - uses: actions/checkout@v2
-      - uses: haskell/actions/setup
+      - uses: haskell/actions/setup@v1
         with:
           # cabal-version: 'latest'. Omitted, but defalts to 'latest'
           enable-stack: true
