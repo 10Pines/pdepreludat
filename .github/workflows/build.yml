@@ -1,0 +1,49 @@
+on: [push]
+name: build
+jobs:
+  runhaskell:
+    name: Run Haskell
+    runs-on: ubuntu-latest # or macOS-latest, or windows-latest
+    steps:
+      # things to be cached/restored:
+      - name: Cache stack global package db
+        id:   stack-global
+        uses: actions/cache@v2
+        with:
+          path: ~/.stack
+          key: ${{ runner.os }}-stack-global-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
+          restore-keys: |
+              ${{ runner.os }}-stack-global-${{ matrix.plan.ghc }}
+      - name: Cache stack-installed programs in ~/.local/bin
+        id:   stack-programs
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/bin
+          key: ${{ runner.os }}-stack-programs-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
+          restore-keys: |
+              ${{ runner.os }}-stack-programs-${{ matrix.plan.ghc }}
+      - name: Cache .stack-work
+        uses: actions/cache@v2
+        with:
+          path: .stack-work
+          key: ${{ runner.os }}-stack-work-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
+          restore-keys: |
+              ${{ runner.os }}-stack-work-${{ matrix.plan.ghc }}
+      # end cache configuration
+      - uses: actions/checkout@v2
+      - uses: haskell/actions/setup@v1
+        with:
+          # cabal-version: 'latest'. Omitted, but defalts to 'latest'
+          enable-stack: true
+          stack-version: 'latest'
+      - run: stack test
+      - run: ./build_hsfiles.sh > pdepreludat.hsfiles
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        if: github.ref == 'refs/heads/master'
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "draft"
+          prerelease: true
+          title: "Draft"
+          files: |
+            pdepreludat.hsfiles
