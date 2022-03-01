@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 983135630b3d059bec5924aceb372f8767d1a8694efbe286ce54ba1c5ade2fa5
+-- hash: 59331dd2abcb3ca21452099e13964df448fcc0789d9aee6c6cfaecfc34c4127c
 
 name:           pdeprelude
 version:        0.2.0.0
@@ -36,7 +36,16 @@ library
       Paths_pdeprelude
   hs-source-dirs:
       src
-  default-extensions: DataKinds TypeOperators UndecidableInstances FlexibleInstances ScopedTypeVariables MultiParamTypeClasses NoImplicitPrelude RebindableSyntax DerivingVia
+  default-extensions:
+      DataKinds
+      TypeOperators
+      UndecidableInstances
+      FlexibleInstances
+      ScopedTypeVariables
+      MultiParamTypeClasses
+      NoImplicitPrelude
+      RebindableSyntax
+      DerivingVia
   ghc-options: -Wno-missing-methods
   build-depends:
       base >=4.7 && <5
@@ -49,7 +58,16 @@ test-suite pdeprelude-test
       Paths_pdeprelude
   hs-source-dirs:
       test
-  default-extensions: DataKinds TypeOperators UndecidableInstances FlexibleInstances ScopedTypeVariables MultiParamTypeClasses NoImplicitPrelude RebindableSyntax DerivingVia
+  default-extensions:
+      DataKinds
+      TypeOperators
+      UndecidableInstances
+      FlexibleInstances
+      ScopedTypeVariables
+      MultiParamTypeClasses
+      NoImplicitPrelude
+      RebindableSyntax
+      DerivingVia
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5

@@ -952,17 +952,6 @@ map = P.map
 not :: Bool -> Bool
 not = P.not
 
--- | otherwise está definido como el valor True.
---
--- Ayuda a hacer las guardas más expresivas:
---
--- @
--- f x | x < 0     = ...
---     | otherwise = ...
--- @
-otherwise :: Bool
-otherwise = P.otherwise
-
 -- | Devuelve el primer elemento de una tupla
 --
 -- >>> snd (5, 0)
