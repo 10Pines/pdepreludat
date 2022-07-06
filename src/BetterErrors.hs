@@ -8,7 +8,7 @@ type ErrorNumeroXFuncion = Text "Estás usando una función como un número o un
 type ErrorOrdenableXFuncion = Text "Las funciones no se pueden ordenar ni comparar."
 type ErrorEnumerableXFuncion = Text "Las funciones no son enumerables."
 
-instance TypeError (ErrorNumeroXFuncion) => Num (a -> b)
+instance TypeError ErrorNumeroXFuncion => Num (a -> b)
 instance TypeError ErrorOrdenableXFuncion => Ord (a -> b)
 instance TypeError ErrorOrdenableXFuncion => Eq (a -> b)
 instance TypeError ErrorNumeroXFuncion => Floating (a -> b)

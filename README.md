@@ -4,7 +4,52 @@
 
 Pdepreludat es una biblioteca que busca hacer más amigable y didáctico al Prelude de haskell, por ejemplo mejorando ciertos mensajes de error.
 
-La biblioteca exporta un modulo que contiene la mayoría de las funciones existentes en el Prelude, con ciertas modificaciones:
+## Para usarlo en un nuevo proyecto
+
+### Instalar stack
+
+Si estás usando Linux, podés correr el siguiente comando:
+
+```bash
+curl -sSL https://get.haskellstack.org/ | sh
+```
+
+Si estás usando Windows, podés descargarlo haciendo click [acá](https://get.haskellstack.org/stable/windows-x86_64-installer.exe).
+
+Para más información podés ir a la [página oficial de stack](https://docs.haskellstack.org/en/stable/README/#how-to-install).
+
+### Preparar proyecto
+
+Correr el siguiente comando que va a crear una carpeta llamada `proyecto-test` (o el nombre que le hayan pasado `stack new`) con el proyecto adentro:
+
+```bash
+stack new proyecto-test https://github.com/10Pines/pdepreludat/releases/latest/download/pdepreludat.hsfiles
+```
+
+Una vez creada la carpeta, moverse a la misma y compilar el proyecto con los siguientes comandos:
+
+```bash
+cd proyecto-test
+stack build --test
+```
+
+### Probarlo
+
+Ahora ya debería haber descargado e instalado todo lo necesario para funcionar, para poder correr el intérprete, ejecutar:
+
+```bash
+stack ghci
+```
+
+También, se pueden correr los tests usando:
+
+```bash
+stack test
+```
+
+# Redefiniciones
+
+La biblioteca exporta un módulo que contiene la mayoría de las funciones existentes en el Prelude, con ciertas modificaciones:
 
 ## Simplificado tipo de funciones que recibían Foldable para que usen []
 
@@ -26,7 +71,7 @@ any :: (a -> Bool) -> [a] -> Bool
 
 ## Reemplazada jerarquía de tipos de la typeclass Num por un único tipo Number
 
-A efectos prácticos, el tipo Number es lo mismo que un Double, y todas las funciones que usaban cualquier otro tipo de número o algún tipo númerico más general fueron redefinidas para que trabajen con Number.
+A efectos prácticos, el tipo Number es lo mismo que un Double, y todas las funciones que usaban cualquier otro tipo de número o algún tipo numérico más general fueron redefinidas para que trabajen con Number.
 Este es el cambio más disruptivo o que rompe más la compatibilidad con el resto del mundo de Haskell.
 
 La idea es que ayude en:
@@ -200,51 +245,8 @@ Se agregó la función `toFloat` para convertir enteros a decimales, ya que cree
 
 ![Ejemplo en el que al pasar el mouse sobre funciones del PdePreludat se ve la documentacion de las mismas](https://user-images.githubusercontent.com/11432672/113488290-6923f680-9493-11eb-8728-ea5fc12b3a28.gif)
 
-
-## Para usarlo en un nuevo proyecto
-
-### Instalar stack
-
-Si estás usando Linux, podés correr el siguiente comando:
-
-```bash
-curl -sSL https://get.haskellstack.org/ | sh
-```
-
-Si estás usando Windows, podés descargarlo haciendo click [acá](https://get.haskellstack.org/stable/windows-x86_64-installer.exe).
-
-Para más información podés ir a la [página oficial de stack](https://docs.haskellstack.org/en/stable/README/#how-to-install).
-
-### Preparar proyecto
-
-Correr el siguiente comando que va a crear una carpeta llamada `proyecto-test` (o el nombre que le hayan pasado `stack new`) con el proyecto adentro.
-
-```bash
-stack new proyecto-test https://github.com/10Pines/pdepreludat/releases/download/2.1.7/pdepreludat.hsfiles
-```
-
-Una vez creada la carpeta, moverse a la misma y compilar el proyecto con los siguientes comandos:
-
-```bash
-cd proyecto-test
-stack build --test
-```
-
-### Probarlo
-
-Ahora ya debería haber descargado e instalado todo lo necesario para funcionar, para poder correr el interprete, ejecutar:
-
-```bash
-stack ghci
-```
-
-También, se pueden correr los tests usando:
-
-```bash
-stack test
-```
-
 ### Para el desarrollador
 
 Podés ver la [wiki](https://github.com/10Pines/pdepreludat/wiki)
+
 
