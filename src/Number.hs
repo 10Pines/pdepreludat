@@ -5,7 +5,12 @@ module Number (Number,
                numberToFractional,
                numberToIntegral,
                integerToNumber,
-               numberToFloat) where 
+               numberToFloat) where
+
+import Data.Bifunctor
+import Data.Ratio
+import Data.Either
+import Data.Bifoldable
 
 import Prelude (($), (.), (<$>))
 import qualified Prelude as P
@@ -13,32 +18,86 @@ import qualified Prelude as P
 newtype Number = Number { wrappedNum :: WrappedNum }
     deriving (P.RealFrac, P.Num, P.Real, P.Fractional, P.Floating) via WrappedNum
 
-type WrappedNum = P.Double
+type WrappedNum = Either P.Integer P.Double
+
+-- When applying a binary operator to an Integer and a Double, automatically returns Double
+instance P.Num WrappedNum where
+    Left x  + Left y  = Left (x P.+ y)
+    Right x + Right y = toWrapped (x P.+ y)
+    Left x  + Right y = toWrapped (P.fromIntegral x P.+ y)
+    Right x + Left y  = toWrapped (x P.+ P.fromIntegral y)
+
+    Left x  * Left y  = Left (x P.* y)
+    Right x * Right y = toWrapped (x P.* y)
+    Left x  * Right y = toWrapped (P.fromIntegral x P.* y)
+    Right x * Left y  = toWrapped (x P.* P.fromIntegral y)
+
+    abs = bimap P.abs P.abs
+    signum = bimap P.signum P.signum
+    fromInteger = Left
+    negate = bimap P.negate P.negate
+
+instance P.Real WrappedNum where
+    toRational = P.either P.toRational P.toRational
+
+instance P.Fractional WrappedNum where
+    fromRational x = case (P.== numberToIntegral 1) . denominator $ x of
+        P.True -> Left (numerator x)
+        P.False -> case convertIfPossible . P.fromRational $ x of
+            P.Just y -> Left y
+            P.Nothing -> Right $ P.fromRational x
+
+    recip = toWrapped . (numberToFloat 1 P./) . bifoldr (\x y -> y P.+ P.fromIntegral x) (P.+) (numberToFloat 0)
+
+instance P.RealFrac WrappedNum where
+    properFraction = either
+        (\x -> (P.fromIntegral x, Left (numberToIntegral 0)))
+        (second Right . P.properFraction)
+
+instance P.Floating WrappedNum where
+    pi = Right P.pi
+    exp = toWrapped . P.exp . toDouble
+    log = toWrapped . P.log . toDouble
+    sin = toWrapped . P.sin . toDouble
+    cos = toWrapped . P.cos . toDouble
+    asin = toWrapped . P.asin . toDouble
+    acos = toWrapped . P.acos . toDouble
+    atan = toWrapped . P.atan . toDouble
+    sinh = toWrapped . P.sinh . toDouble
+    cosh = toWrapped . P.cosh . toDouble
+    asinh = toWrapped . P.asinh . toDouble
+    acosh = toWrapped . P.acosh . toDouble
+    atanh = toWrapped . P.atanh . toDouble
+
+toDouble :: WrappedNum -> P.Double
+toDouble = either P.fromIntegral P.id
+
+toWrapped :: P.Double -> WrappedNum
+toWrapped x = case convertIfPossible x of
+    P.Just y -> Left y
+    P.Nothing -> Right . roundToWrap' $ x
 
 -- Funciones para convertir entre Number y los Num del Prelude
 
 numberToIntegral :: (P.Integral a) => Number -> a
-numberToIntegral number = case rounded number of
-    Integer integer -> P.fromInteger integer
-    Decimal _ -> P.error $ "Se esperaba un valor entero pero se pasó uno con decimales: " P.++ P.show number
+numberToIntegral (Number number) = case number of
+    Left integer -> P.fromInteger integer
+    Right double -> case convertIfPossible double of
+        P.Just y -> y
+        P.Nothing -> P.error $ "Se esperaba un valor entero pero se pasó uno con decimales: " P.++ P.show double
+
+convertIfPossible :: P.Integral a => P.Double -> P.Maybe a
+convertIfPossible x = case (P.== numberToFloat 0) . P.snd . P.properFraction . roundToWrap $ x of
+    P.True -> P.Just $ P.round x
+    P.False -> P.Nothing
 
 -- El numero pero redondeado y ya conociendo si es entero o decimal
 
-data RoundedNumber = Integer P.Integer | Decimal WrappedNum
-
-rounded :: Number -> RoundedNumber
-rounded (Number number) | isFractional = Decimal roundedNumber
-                        | P.otherwise = Integer $ P.floor roundedNumber
-    where isFractional = P.floor roundedNumber P./= P.ceiling roundedNumber
-          roundedNumber = roundWrappedNum number
-
 isInteger :: Number -> P.Bool
-isInteger number = case rounded number of
-    Integer _ -> P.True
-    Decimal _ -> P.False
+isInteger = isLeft . wrappedNum
 
 isDecimal :: Number -> P.Bool
-isDecimal  = P.not . isInteger
+isDecimal = P.not . isInteger
 
 numberToFractional :: (P.Fractional a) => Number -> a
 numberToFractional = P.realToFrac
@@ -62,30 +121,42 @@ fromRational = P.fromRational
 
 -- Redondeos para evitar los errores que pueden surgir de trabajar con numeros de punto flotante
 
-roundWrappedNum :: WrappedNum -> WrappedNum
-roundWrappedNum = roundingTo digitsAfterComma
+roundToWrap :: P.Double -> P.Double
+roundToWrap = roundingTo digitsToCheckIfInteger
+
+roundToWrap' :: P.Double -> P.Double
+roundToWrap' = roundingTo digitsAfterComma
 
 digitsAfterComma :: P.Integer
-digitsAfterComma = P.round $ wrappedNum 9.0
+digitsAfterComma = numberToIntegral 10
 
-roundingTo :: P.Integer -> WrappedNum -> WrappedNum
+digitsToCheckIfInteger :: P.Integer
+digitsToCheckIfInteger = numberToIntegral 9
+
+roundingTo :: P.Integer -> P.Double -> P.Double
 roundingTo n = (P./ exp) . P.fromIntegral . P.round . (P.* exp)
     where exp = (numberToFractional 10) P.^ n
 
 instance P.Ord Number where
-    compare (Number a) (Number b) = P.compare (roundWrappedNum a) (roundWrappedNum b)
+    compare (Number (Left a))  (Number (Left b))  = P.compare a b
+    compare (Number (Right a)) (Number (Right b)) = P.compare a b
+    compare (Number (Left a))  (Number (Right b)) = P.compare (P.fromIntegral a) b
+    compare (Number (Right a)) (Number (Left b))  = P.compare a (P.fromIntegral b)
 
 instance P.Eq Number where
-    Number a == Number b = roundWrappedNum a P.== roundWrappedNum b
+    Number a == Number b = a P.== b
 
 instance P.Show Number where
-    show number = case rounded number of
-        Integer integer -> P.show integer
-        Decimal decimal -> P.show decimal
+    -- show (Number number) = case number of
+    --     Left integer -> P.show integer
+    --     Right decimal -> P.show decimal
+    show = either P.show P.show . wrappedNum
 
 instance P.Enum Number where
-    toEnum integer = Number $ P.toEnum integer
-    fromEnum (Number n) = P.fromEnum n
+    toEnum integer = Number $ Left $ P.toInteger integer
+    fromEnum (Number (Left n))  = P.fromEnum n
+    fromEnum (Number (Right n)) = P.error $ "Se esperaba un valor entero pero se pasó uno con decimales: " P.++ P.show n
+
     enumFromThenTo first second last = case P.all isInteger [first, second, last] of
         P.True -> fromInteger <$> P.enumFromThenTo
                                         (numberToIntegral first)

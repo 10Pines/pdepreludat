@@ -21,6 +21,8 @@ main = hspec $ do
           show 1 `shouldBe` "1"
         it "mostrar un numero decimal incluye la parte decimal" $ do
           show 1.5 `shouldBe` "1.5"
+        it "números enteros más allá de la precisión de Double se muestran correctamente" $ do
+          show 12345678901234567890 `shouldBe` "12345678901234567890"
       describe "redondea a 9 decimales para compensar errores de punto flotante" $ do
         it "los numeros con muchos decimales se muestran redondeados" $ do
           show 0.9999999999 `shouldBe` "1"
