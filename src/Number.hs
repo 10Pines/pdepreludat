@@ -20,7 +20,8 @@ newtype Number = Number { wrappedNum :: WrappedNum }
 
 type WrappedNum = Either P.Integer P.Double
 
--- When applying a binary operator to an Integer and a Double, automatically returns Double
+-- Instancias de typeclasses numéricas
+
 instance P.Num WrappedNum where
     Left x  + Left y  = Left (x P.+ y)
     Right x + Right y = toWrapped (x P.+ y)
@@ -127,11 +128,11 @@ roundToWrap = roundingTo digitsToCheckIfInteger
 roundToWrap' :: P.Double -> P.Double
 roundToWrap' = roundingTo digitsAfterComma
 
-digitsAfterComma :: P.Integer
-digitsAfterComma = numberToIntegral 10
-
 digitsToCheckIfInteger :: P.Integer
 digitsToCheckIfInteger = numberToIntegral 9
+
+digitsAfterComma :: P.Integer
+digitsAfterComma = numberToIntegral 10
 
 roundingTo :: P.Integer -> P.Double -> P.Double
 roundingTo n = (P./ exp) . P.fromIntegral . P.round . (P.* exp)
@@ -147,9 +148,6 @@ instance P.Eq Number where
     Number a == Number b = a P.== b
 
 instance P.Show Number where
-    -- show (Number number) = case number of
-    --     Left integer -> P.show integer
-    --     Right decimal -> P.show decimal
     show = either P.show P.show . wrappedNum
 
 instance P.Enum Number where
