@@ -34,12 +34,12 @@ instance P.Num WrappedNum where
     Right x * Left y  = toWrapped (x P.* P.fromIntegral y)
 
     abs = bimap P.abs P.abs
-    signum = bimap P.signum P.signum
+    signum = either (Left . P.signum) (toWrapped . P.signum)
     fromInteger = Left
     negate = bimap P.negate P.negate
 
 instance P.Real WrappedNum where
-    toRational = P.either P.toRational P.toRational
+    toRational = either P.toRational P.toRational
 
 instance P.Fractional WrappedNum where
     fromRational x = case (P.== numberToIntegral 1) . denominator $ x of
