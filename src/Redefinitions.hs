@@ -659,7 +659,7 @@ divMod unNumero otroNumero =
 -- >>> pi
 -- 3.141592654
 pi :: Number
-pi = P.pi
+pi = P.undefined--P.pi
 
 -- | Devuelve el valor de la función exponencial e^x, pasando como parámetro la __x__
 --
@@ -673,7 +673,7 @@ pi = P.pi
 -- >>> exp 5
 -- 148.413159103
 exp :: Number -> Number
-exp = P.exp
+exp = P.undefined--P.exp
 
 -- | Devuelve el logaritmo en base 10 de un número.
 --
@@ -682,14 +682,14 @@ exp = P.exp
 -- >>> log 149
 -- 5.003946306
 log :: Number -> Number
-log = P.log
+log = P.undefined--P.log
 
 -- | Devuelve la raíz cuadrada de un número.
 -- 
 -- >>> sqrt 9
 -- 3
 sqrt :: Number -> Number
-sqrt = P.sqrt
+sqrt = P.undefined--P.sqrt
 
 -- | Dados dos números, devuelve el primero elevado a la potencia del segundo.
 --
@@ -703,7 +703,7 @@ sqrt = P.sqrt
 -- >>> (**) 2 4
 -- 16
 (**) :: Number -> Number -> Number
-(**) = (P.**)
+(**) = P.undefined--(P.**)
 
 -- | Dados dos números (__x__ e __y__), devuelve el logaritmo en base __x__ del número __y__.
 --
@@ -715,7 +715,7 @@ sqrt = P.sqrt
 -- >>> logBase 10 100
 -- 2
 logBase :: Number -> Number -> Number
-logBase = P.logBase
+logBase = P.undefined--P.logBase
 
 -- | Devuelve el seno de un número.
 --
@@ -727,7 +727,7 @@ logBase = P.logBase
 -- >>> sin (pi / 2)
 -- 1
 sin :: Number -> Number
-sin = P.sin
+sin = P.undefined--P.sin
 
 -- | Devuelve el coseno de un número.
 --
@@ -739,7 +739,7 @@ sin = P.sin
 -- >>> cos (pi / 2)
 -- 0
 cos :: Number -> Number
-cos = P.cos
+cos = P.undefined--P.cos
 
 -- | Devuelve la tangente de un número.
 --
@@ -751,7 +751,7 @@ cos = P.cos
 -- >>> tan (pi / 2)
 -- 16331239353195370
 tan :: Number -> Number
-tan = P.tan
+tan = P.undefined--P.tan
 
 -- | Devuelve el arcoseno de un número.
 --
@@ -760,7 +760,7 @@ tan = P.tan
 -- >>> asin 1
 -- 1.570796327
 asin :: Number -> Number
-asin = P.asin
+asin = P.undefined--P.asin
 
 -- | Devuelve el arcocoseno de un número.
 --
@@ -769,7 +769,7 @@ asin = P.asin
 -- >>> acos 0
 -- 1.570796327
 acos :: Number -> Number
-acos = P.acos
+acos = P.undefined--P.acos
 
 -- | Devuelve el arcotangente de un número.
 --
@@ -778,7 +778,7 @@ acos = P.acos
 -- >>> atan 1
 -- 0.785398163
 atan :: Number -> Number
-atan = P.atan
+atan = P.undefined--P.atan
 
 -- | Devuelve el seno hiperbólico de un número.
 --
@@ -787,7 +787,7 @@ atan = P.atan
 -- >>> sinh 1
 -- 1.175201194
 sinh :: Number -> Number
-sinh = P.sinh
+sinh = P.undefined--P.sinh
 
 -- | Devuelve el coseno hiperbólico de un número.
 --
@@ -796,7 +796,7 @@ sinh = P.sinh
 -- >>> cosh 0
 -- 1
 cosh :: Number -> Number
-cosh = P.cosh
+cosh = P.undefined--P.cosh
 
 -- | Devuelve la tangente hiperbólica de un número.
 --
@@ -805,28 +805,28 @@ cosh = P.cosh
 -- >>> tanh 0
 -- 0
 tanh :: Number -> Number
-tanh = P.tanh
+tanh = P.undefined--P.tanh
 
 -- | Devuelve el arcoseno hiperbólico de un número.
 --
 -- >>> asinh 1
 -- 0.881373587
 asinh :: Number -> Number
-asinh = P.asinh
+asinh = P.undefined--P.asinh
 
 -- | Devuelve el arcocoseno hiperbólico de un número.
 --
 -- >>> acosh 1
 -- 0
 acosh :: Number -> Number
-acosh = P.acosh
+acosh = P.undefined--P.acosh
 
 -- | Devuelve el arcotangente hiperbólica de un número.
 --
 -- >>> atanh 0
 -- 0
 atanh :: Number -> Number
-atanh = P.atanh
+atanh = P.undefined--P.atanh
 
 -- | La aplicación de funciones
 -- 
