@@ -3,8 +3,6 @@ import PdePreludat
 import Test.Hspec
 import Control.Exception (evaluate)
 import qualified Prelude as P
-import Test.Hspec.QuickCheck
-import Test.QuickCheck
 
 main :: IO ()
 main = hspec $ do

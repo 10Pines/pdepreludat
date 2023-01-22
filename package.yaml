@@ -49,4 +49,3 @@ tests:
     dependencies:
     - pdeprelude
     - hspec
-    - QuickCheck
