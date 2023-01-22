@@ -44,6 +44,12 @@ main = hspec $ do
           (0.1 * 3) `shouldBeTheSameNumberAs` 0.3
         it "no se pierde informacion al hacer sucesivas operaciones con decimales" $ do
           (1 / 3 * 3) `shouldBeTheSameNumberAs` 1
+      describe "Floating" $ do
+        it "pi se muestra correctamente" $ do
+          take 10 (show pi) `shouldBe` "3.14159265"
+        it "las funciones trigonometricas funcionan correctamente" $ do
+          cos pi `shouldBe` -1
+          sin (pi / 2) `shouldBe` 1
 
     describe "enumFromThenTo" $ do
       describe "cuando todos los numeros son enteros" $ do
