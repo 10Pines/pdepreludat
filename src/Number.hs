@@ -14,12 +14,9 @@ import GHC.Real (Ratio(..), Real (toRational))
 import GHC.Num (divInteger)
 import Numeric (showFFloat)
 import GHC.Stack (HasCallStack)
-import Text.Read.Lex (numberToRational)
 
 newtype Number = Number { wrappedNum :: WrappedNum }
-    deriving (P.RealFrac, P.Num, P.Real, P.Fractional, P.Eq, P.Ord
-    -- , P.Floating
-    ) via WrappedNum
+    deriving (P.RealFrac, P.Num, P.Real, P.Fractional, P.Eq, P.Ord) via WrappedNum
 
 type WrappedNum = Rational
 
