@@ -2,7 +2,7 @@ module Main where
 import PdePreludat
 import Test.Hspec
 import Control.Exception (evaluate)
-import qualified Prelude
+import qualified Prelude as P
 
 main :: IO ()
 main = hspec $ do
@@ -21,23 +21,33 @@ main = hspec $ do
           show 1 `shouldBe` "1"
         it "mostrar un numero decimal incluye la parte decimal" $ do
           show 1.5 `shouldBe` "1.5"
-      describe "redondea a 9 decimales para compensar errores de punto flotante" $ do
-        it "los numeros con muchos decimales se muestran redondeados" $ do
-          show 0.9999999999 `shouldBe` "1"
-        it "los decimales literales se redondean" $ do
-          0.9999999999 `shouldBeTheSameNumberAs` 1
-        it "los resultados de sumas se redondean" $ do
+      describe "no hay errores de punto flotante al usar numeros decimales" $ do
+        it "números enteros más allá de la precisión de Double se muestran correctamente" $ do
+          show 12345678901234567890 `shouldBe` "12345678901234567890"
+        it "números decimales más allá de la precisión de Double se muestran correctamente" $ do
+          show 12345678901234567890.7 `shouldBe` "12345678901234567890.7"
+        it "numeros decimales negativos se muestran correctamente" $ do
+          show (-0.5) `shouldBe` "-0.5"
+        it "numeros decimales muy grandes se muestran correctamente" $ do
+          show (-12345678901234567890.3) `shouldBe` "-12345678901234567890.3"
+        it "los numeros decimales positivos NO se muestran en notacion cientifica" $ do
+          show 0.000001 `shouldBe` "0.000001"
+        it "los numeros decimales negativos NO se muestran en notacion cientifica" $ do
+          show (-0.000001) `shouldBe` "-0.000001"
+        it "los resultados de sumas dan el resultado esperado" $ do
           (0.1 + 0.7) `shouldBeTheSameNumberAs` 0.8
-        it "los resultados de restas se redondean" $ do
+        it "los resultados de restas dan el resultado esperado" $ do
           (0.8 - 0.1) `shouldBeTheSameNumberAs` 0.7
-        it "los resultados de multiplicaciones se redondean" $ do
+        it "los resultados de multiplicaciones dan el resultado esperado" $ do
           (0.1 * 3) `shouldBeTheSameNumberAs` 0.3
-        it "los resultados de divisiones se redondean" $ do
-          (1 / 3) `shouldBeTheSameNumberAs` 0.333333333
-        it "no se pierde informacion al redondear en sucesivas operaciones" $ do
+        it "no se pierde informacion al hacer sucesivas operaciones con decimales" $ do
           (1 / 3 * 3) `shouldBeTheSameNumberAs` 1
-        it "se redondea al usarse como parámetro de funciones que necesitan enteros" $ do
-          take 0.9999999999 [1,2,3,4] `shouldBe` [1]
+      describe "Floating" $ do
+        it "pi se muestra correctamente" $ do
+          take 10 (show pi) `shouldBe` "3.14159265"
+        it "las funciones trigonometricas funcionan correctamente" $ do
+          cos pi `shouldBe` -1
+          sin (pi / 2) `shouldBe` 1
 
     describe "enumFromThenTo" $ do
       describe "cuando todos los numeros son enteros" $ do
@@ -75,7 +85,7 @@ main = hspec $ do
           it "aplica la función para una lista con elementos" $ do
             sumOf length ["abracadabra", "pata", "de", "cabra"] `shouldBe` 22
 
-shouldBeTheSameNumberAs :: Number -> Number -> Expectation
+shouldBeTheSameNumberAs :: HasCallStack => Number -> Number -> Expectation
 shouldBeTheSameNumberAs aNumber anotherNumber =
   (aNumber `shouldBe` anotherNumber) <>
   (aNumber < anotherNumber `shouldBe` False) <>

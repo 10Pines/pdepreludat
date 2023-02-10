@@ -1,23 +1,28 @@
 module Number (Number,
                fromInteger,
                fromRational,
+               fromReal,
                integralToNumber,
                numberToFractional,
                numberToIntegral,
-               integerToNumber,
-               numberToFloat) where 
+               integerToNumber) where
 
-import Prelude (($), (.), (<$>))
+import Prelude (($), (.), (<$>), (<>))
 import qualified Prelude as P
+import Data.Ratio (Ratio, Rational, (%), numerator, denominator)
+import GHC.Real (Ratio(..), Real (toRational))
+import GHC.Num (divInteger)
+import Numeric (showFFloat)
+import GHC.Stack (HasCallStack)
 
 newtype Number = Number { wrappedNum :: WrappedNum }
-    deriving (P.RealFrac, P.Num, P.Real, P.Fractional, P.Floating) via WrappedNum
+    deriving (P.RealFrac, P.Num, P.Real, P.Fractional, P.Eq, P.Ord) via WrappedNum
 
-type WrappedNum = P.Double
+type WrappedNum = Rational
 
 -- Funciones para convertir entre Number y los Num del Prelude
 
-numberToIntegral :: (P.Integral a) => Number -> a
+numberToIntegral :: HasCallStack => (P.Integral a) => Number -> a
 numberToIntegral number = case rounded number of
     Integer integer -> P.fromInteger integer
     Decimal _ -> P.error $ "Se esperaba un valor entero pero se pasó uno con decimales: " P.++ P.show number
@@ -27,10 +32,9 @@ numberToIntegral number = case rounded number of
 data RoundedNumber = Integer P.Integer | Decimal WrappedNum
 
 rounded :: Number -> RoundedNumber
-rounded (Number number) | isFractional = Decimal roundedNumber
-                        | P.otherwise = Integer $ P.floor roundedNumber
-    where isFractional = P.floor roundedNumber P./= P.ceiling roundedNumber
-          roundedNumber = roundWrappedNum number
+rounded (Number number) | hasNoDecimalPart number = Decimal number
+                        | P.otherwise = Integer $ P.floor number
+    where hasNoDecimalPart = (P./= wrappedNum 0) . P.snd . P.properFraction
 
 isInteger :: Number -> P.Bool
 isInteger number = case rounded number of
@@ -42,9 +46,6 @@ isDecimal  = P.not . isInteger
 
 numberToFractional :: (P.Fractional a) => Number -> a
 numberToFractional = P.realToFrac
-
-numberToFloat :: (P.RealFloat a) => Number -> a
-numberToFloat = P.realToFrac
 
 integralToNumber :: P.Integral a => a -> Number
 integralToNumber number = P.fromIntegral number :: Number
@@ -60,28 +61,45 @@ fromInteger = P.fromInteger
 fromRational :: P.Rational -> Number
 fromRational = P.fromRational
 
--- Redondeos para evitar los errores que pueden surgir de trabajar con numeros de punto flotante
+fromReal :: Real a => a -> Number
+fromReal = Number . toRational
 
-roundWrappedNum :: WrappedNum -> WrappedNum
-roundWrappedNum = roundingTo digitsAfterComma
+withDouble :: (P.Double -> P.Double) -> (Number -> Number)
+withDouble f = fromReal . f . numberToFractional 
 
-digitsAfterComma :: P.Integer
-digitsAfterComma = P.round $ wrappedNum 9.0
-
-roundingTo :: P.Integer -> WrappedNum -> WrappedNum
-roundingTo n = (P./ exp) . P.fromIntegral . P.round . (P.* exp)
-    where exp = (numberToFractional 10) P.^ n
-
-instance P.Ord Number where
-    compare (Number a) (Number b) = P.compare (roundWrappedNum a) (roundWrappedNum b)
-
-instance P.Eq Number where
-    Number a == Number b = roundWrappedNum a P.== roundWrappedNum b
+instance P.Floating Number where
+    pi = fromReal (P.pi :: P.Double)
+    exp = withDouble P.exp
+    log = withDouble P.log
+    sin = withDouble P.sin
+    cos = withDouble P.cos
+    asin = withDouble P.asin
+    acos = withDouble P.acos
+    atan = withDouble P.atan
+    sinh = withDouble P.sinh
+    cosh = withDouble P.cosh
+    asinh = withDouble P.asinh
+    acosh = withDouble P.acosh
+    atanh = withDouble P.atanh
 
 instance P.Show Number where
-    show number = case rounded number of
-        Integer integer -> P.show integer
-        Decimal decimal -> P.show decimal
+    show (Number (numerator :% denominator))
+        | decimalPart P.== decimalZero = integerPartAsString
+        | isBetween0AndMinus1 = "-" <> integerPartAsString <> decimalPartAsString
+        | P.otherwise = integerPartAsString <> decimalPartAsString
+
+        where   integerPartAsString = P.show integerPart
+                integerPart = numerator `P.quot` denominator :: P.Integer          
+
+                decimalPartAsString = P.dropWhile (P./= '.') (showFFloat P.Nothing decimalPart "")
+                remainder = numerator `P.rem` denominator
+                decimalPart = P.fromInteger remainder P./ P.fromInteger denominator
+
+                isBetween0AndMinus1 = integerPart P.== integerZero P.&& isNegative numerator
+                isNegative n = n P.< integerZero
+                integerZero = numberToIntegral 0
+                decimalZero = numberToFractional 0
+
 
 instance P.Enum Number where
     toEnum integer = Number $ P.toEnum integer
