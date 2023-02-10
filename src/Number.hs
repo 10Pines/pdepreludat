@@ -11,7 +11,6 @@ import Prelude (($), (.), (<$>), (<>))
 import qualified Prelude as P
 import Data.Ratio (Ratio, Rational, (%), numerator, denominator)
 import GHC.Real (Ratio(..), Real (toRational))
-import GHC.Num (divInteger)
 import Numeric (showFFloat)
 import GHC.Stack (HasCallStack)
 
