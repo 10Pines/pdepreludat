@@ -68,4 +68,4 @@ jobs:
         if: always()
         with:
           path: ${{ steps.setuphaskell.outputs.stack-root }}
-          key: ${{ runner.os }}-${{ matrix.snapshot }}-stack2            
+          key: ${{ runner.os }}-${{ matrix.snapshot }}-stack2
