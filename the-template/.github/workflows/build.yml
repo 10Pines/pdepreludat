@@ -6,36 +6,12 @@ jobs:
     name: Run Haskell
     runs-on: ubuntu-latest # or macOS-latest, or windows-latest
     steps:
-      # things to be cached/restored:
-      - name: Cache stack global package db
-        id:   stack-global
-        uses: actions/cache@v2
+      - uses: actions/checkout@v4
+      - uses: haskell-actions/setup@v2
         with:
-          path: ~/.stack
-          key: ${{ runner.os }}-stack-global-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
-          restore-keys: |
-              ${{ runner.os }}-stack-global-${{ matrix.plan.ghc }}
-      - name: Cache stack-installed programs in ~/.local/bin
-        id:   stack-programs
-        uses: actions/cache@v2
-        with:
-          path: ~/.local/bin
-          key: ${{ runner.os }}-stack-programs-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
-          restore-keys: |
-              ${{ runner.os }}-stack-programs-${{ matrix.plan.ghc }}
-      - name: Cache .stack-work
-        uses: actions/cache@v2
-        with:
-          path: .stack-work
-          key: ${{ runner.os }}-stack-work-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
-          restore-keys: |
-              ${{ runner.os }}-stack-work-${{ matrix.plan.ghc }}
-      # end cache configuration
-      - uses: actions/checkout@v2
-      - uses: haskell/actions/setup@v1
-        with:
-          # cabal-version: 'latest'. Omitted, but defalts to 'latest'
+          ghc-version: '9.6.4' # Exact version of ghc to use
+          cabal-version: '3.10.2.1'
           enable-stack: true
-          stack-version: 'latest'
+          stack-version: '2.13.1'
       - run: stack test
 # <%={{ }}=%>
