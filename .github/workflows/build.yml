@@ -5,21 +5,12 @@ jobs:
     name: Run Haskell
     runs-on: ubuntu-latest # or macOS-latest, or windows-latest
     steps:
-      - uses: actions/cache@v3
-        name: Cache ~/.stack
+      - name: Cache Dependencies
+        id: cache-dependencies
+        uses: actions/cache@v4
         with:
-          path: ~/.stack
-          key: ${{ runner.os }}-stack-global-${{ hashFiles('stack.yaml') }}-${{ hashFiles('package.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-stack-global-
-      - uses: actions/cache@v3
-        name: Cache .stack-work
-        with:
-          path: .stack-work
-          key: ${{ runner.os }}-stack-work-${{ hashFiles('stack.yaml') }}-${{ hashFiles('package.yaml') }}-${{ hashFiles('**/*.hs') }}
-          restore-keys: |
-            ${{ runner.os }}-stack-work-
-
+          path: /home/runner
+          key: ${{ runner.os }}-runner
       - uses: actions/checkout@v4
       - uses: haskell-actions/setup@v2
         with:
