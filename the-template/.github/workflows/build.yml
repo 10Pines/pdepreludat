@@ -6,6 +6,12 @@ jobs:
     name: Run Haskell
     runs-on: ubuntu-latest # or macOS-latest, or windows-latest
     steps:
+      - name: Cache Dependencies
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: /home/runner
+          key: ${{ runner.os }}-runner
       - uses: actions/checkout@v4
       - uses: haskell-actions/setup@v2
         with:
