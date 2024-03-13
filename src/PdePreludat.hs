@@ -2,6 +2,7 @@ module PdePreludat (
     module Prelude,
     module Redefinitions,
     module Number,
+    module PrettyPrinter,
     implementame,
     arreglame,
     (...),
@@ -11,6 +12,7 @@ module PdePreludat (
 -- Estos modulos solo exportan instancias de typeclasses, que se exportan por default asi que no es necesario reexportarlos
 import BetterErrors
 import ShowFunction
+import PrettyPrinter
 
 -- Estos modulos definen funciones y tipos, así que es necesario reexportarlos.
 import Number

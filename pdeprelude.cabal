@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.36.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 85bc85be6f2e516c7d91e705fa61c4e2acc04bad0672159d739e001f764c498f
+-- hash: fa032a2e5ae55a22fd1f4907cd1daa2b116936c9aa30d5086cbe4cd6611285fc
 
 name:           pdeprelude
 version:        0.2.0.0
@@ -30,6 +30,7 @@ library
       BetterErrors
       Number
       PdePreludat
+      PrettyPrinter
       Redefinitions
       ShowFunction
   other-modules:
