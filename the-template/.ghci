@@ -1,2 +1,2 @@
-:set -interactive-print=Text.Pretty.Simple.pPrint
+:set -interactive-print=PdePreludat.prettyPrint
 :set prompt "> "
