@@ -19,11 +19,14 @@ jobs:
         with:
           enable-stack: true
           stack-no-global: true
+          stack-version: '2.13.1'
+
       - uses: actions/cache/restore@v3
         name: Cache stack files
         with:
           path: ${{ steps.setuphaskell.outputs.stack-root }}
           key: ${{ runner.os }}-${{ matrix.snapshot }}-stack2
+
       - uses: actions/checkout@v4
 
       - name: Setup stack.yaml

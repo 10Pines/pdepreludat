@@ -18,6 +18,7 @@ jobs:
         with:
           enable-stack: true
           stack-no-global: true
+
       - uses: actions/cache/restore@v3
         name: Cache stack files
         with:
@@ -55,6 +56,7 @@ jobs:
           stack build --resolver=${{ matrix.snapshot }} --ghc-options=-Werror --test --bench -j 1
 
       - run: ./build_hsfiles.sh > pdepreludat.hsfiles
+
       - uses: "marvinpinto/action-automatic-releases@latest"
         if: github.ref == 'refs/heads/master'
         with:
@@ -64,6 +66,7 @@ jobs:
           title: "Draft"
           files: |
             pdepreludat.hsfiles
+            
       - uses: actions/cache/save@v3
         if: always()
         with:
