@@ -48,10 +48,7 @@ jobs:
           stack --version
           stack --resolver=${{ matrix.snapshot }} ghc -- --version
 
-          # we first build everything without running the tests (with unlimited parallelism)
-          stack build --resolver=${{ matrix.snapshot }} --ghc-options=-Werror --test --bench --no-run-tests
-
-          # once that's done we run the tests in a single threaded fashion to avoid
+          # we run the tests in a single threaded fashion to avoid
           # https://github.com/commercialhaskell/stack/issues/5024#issuecomment-845001389
           stack build --resolver=${{ matrix.snapshot }} --ghc-options=-Werror --test --bench -j 1
 
