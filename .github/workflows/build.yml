@@ -3,14 +3,7 @@ name: build
 jobs:
   runhaskell:
     name: Run Haskell
-    runs-on: ${{ matrix.os }}-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu
-        snapshot:
-          - 'lts-22.13'
+    runs-on: ubuntu-latest
     steps:
       - uses: haskell-actions/setup@main
         name: Setup Haskell Stack
@@ -19,41 +12,23 @@ jobs:
           enable-stack: true
           stack-no-global: true
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache@v4
         name: Cache stack files
         with:
-          path: ${{ steps.setuphaskell.outputs.stack-root }}
-          key: ${{ runner.os }}-${{ matrix.snapshot }}-stack2
+          path: ~/.stack
+          key: ${{ runner.os }}-stack-global-${{ hashFiles('stack.yaml') }}-${{ hashFiles('package.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-stack-global-     
+
       - uses: actions/checkout@v4
-
-      - name: Setup stack.yaml
-        shell: bash
-        run: |
-          set -x
-          mv -vf "stack-ci.yaml" ./stack.yaml || true
-          mv -vf "stack-${{ matrix.snapshot }}.yaml" ./stack.yaml || true
-          mv -vf "stack-${{ matrix.snapshot }}-${{ matrix.os }}.yaml" ./stack.yaml || true
-
       - name: Build and test
-        shell: bash
         run: |
-          set -x
-          grep . stack.yaml
-          if grep SKIP stack.yaml; then
-            echo Skipped because that snapshot is broken
-            exit 0
-          fi
-          stack setup --resolver=${{ matrix.snapshot }}
-          echo "stack_root: ${{ steps.setuphaskell.outputs.stack-root }}"
+          set -euo pipefail
           stack --version
-          stack --resolver=${{ matrix.snapshot }} ghc -- --version
-
-          # we first build everything without running the tests (with unlimited parallelism)
-          stack build --resolver=${{ matrix.snapshot }} --ghc-options=-Werror --test --bench --no-run-tests
-
-          # once that's done we run the tests in a single threaded fashion to avoid
-          # https://github.com/commercialhaskell/stack/issues/5024#issuecomment-845001389
-          stack build --resolver=${{ matrix.snapshot }} --ghc-options=-Werror --test --bench -j 1
+          echo "stack_root: ${{ steps.setuphaskell.outputs.stack-root }}"
+          stack setup
+          stack ghc -- --version
+          stack test
 
       - run: ./build_hsfiles.sh > pdepreludat.hsfiles
 
@@ -66,9 +41,3 @@ jobs:
           title: "Draft"
           files: |
             pdepreludat.hsfiles
-            
-      - uses: actions/cache/save@v3
-        if: always()
-        with:
-          path: ${{ steps.setuphaskell.outputs.stack-root }}
-          key: ${{ runner.os }}-${{ matrix.snapshot }}-stack2
