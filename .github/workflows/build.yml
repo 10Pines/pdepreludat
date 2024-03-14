@@ -3,41 +3,60 @@ name: build
 jobs:
   runhaskell:
     name: Run Haskell
-    runs-on: ubuntu-latest # or macOS-latest, or windows-latest
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu
+        snapshot:
+          - 'lts-22.13'
     steps:
-      # things to be cached/restored:
-      - name: Cache stack global package db
-        id:   stack-global
-        uses: actions/cache@v2
+      - uses: haskell-actions/setup@main
+        name: Setup Haskell Stack
+        id: setuphaskell
         with:
-          path: ~/.stack
-          key: ${{ runner.os }}-stack-global-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
-          restore-keys: |
-              ${{ runner.os }}-stack-global-${{ matrix.plan.ghc }}
-      - name: Cache stack-installed programs in ~/.local/bin
-        id:   stack-programs
-        uses: actions/cache@v2
-        with:
-          path: ~/.local/bin
-          key: ${{ runner.os }}-stack-programs-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
-          restore-keys: |
-              ${{ runner.os }}-stack-programs-${{ matrix.plan.ghc }}
-      - name: Cache .stack-work
-        uses: actions/cache@v2
-        with:
-          path: .stack-work
-          key: ${{ runner.os }}-stack-work-${{ matrix.plan.ghc }}-${{ hashFiles('**.yaml') }}
-          restore-keys: |
-              ${{ runner.os }}-stack-work-${{ matrix.plan.ghc }}
-      # end cache configuration
-      - uses: actions/checkout@v2
-      - uses: haskell/actions/setup@v1
-        with:
-          # cabal-version: 'latest'. Omitted, but defalts to 'latest'
           enable-stack: true
-          stack-version: 'latest'
-      - run: stack test
+          stack-no-global: true
+
+      - uses: actions/cache/restore@v3
+        name: Cache stack files
+        with:
+          path: ${{ steps.setuphaskell.outputs.stack-root }}
+          key: ${{ runner.os }}-${{ matrix.snapshot }}-stack2
+      - uses: actions/checkout@v4
+
+      - name: Setup stack.yaml
+        shell: bash
+        run: |
+          set -x
+          mv -vf "stack-ci.yaml" ./stack.yaml || true
+          mv -vf "stack-${{ matrix.snapshot }}.yaml" ./stack.yaml || true
+          mv -vf "stack-${{ matrix.snapshot }}-${{ matrix.os }}.yaml" ./stack.yaml || true
+
+      - name: Build and test
+        shell: bash
+        run: |
+          set -x
+          grep . stack.yaml
+          if grep SKIP stack.yaml; then
+            echo Skipped because that snapshot is broken
+            exit 0
+          fi
+          stack setup --resolver=${{ matrix.snapshot }}
+          echo "stack_root: ${{ steps.setuphaskell.outputs.stack-root }}"
+          stack --version
+          stack --resolver=${{ matrix.snapshot }} ghc -- --version
+
+          # we first build everything without running the tests (with unlimited parallelism)
+          stack build --resolver=${{ matrix.snapshot }} --ghc-options=-Werror --test --bench --no-run-tests
+
+          # once that's done we run the tests in a single threaded fashion to avoid
+          # https://github.com/commercialhaskell/stack/issues/5024#issuecomment-845001389
+          stack build --resolver=${{ matrix.snapshot }} --ghc-options=-Werror --test --bench -j 1
+
       - run: ./build_hsfiles.sh > pdepreludat.hsfiles
+
       - uses: "marvinpinto/action-automatic-releases@latest"
         if: github.ref == 'refs/heads/master'
         with:
@@ -47,3 +66,9 @@ jobs:
           title: "Draft"
           files: |
             pdepreludat.hsfiles
+            
+      - uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: ${{ steps.setuphaskell.outputs.stack-root }}
+          key: ${{ runner.os }}-${{ matrix.snapshot }}-stack2
