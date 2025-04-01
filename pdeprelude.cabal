@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.36.0.
+-- This file has been generated from package.yaml by hpack version 0.37.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: fa032a2e5ae55a22fd1f4907cd1daa2b116936c9aa30d5086cbe4cd6611285fc
+-- hash: 0d9cf642edf9767476494886655133e32370b543cf80ce75b62038f95cc6b389
 
 name:           pdeprelude
 version:        0.2.0.0
@@ -49,7 +49,7 @@ library
       DerivingVia
   ghc-options: -Wno-missing-methods
   build-depends:
-      base >=4.7 && <5
+      base >=4.19 && <5
     , pretty-simple
   default-language: Haskell2010
 
@@ -72,7 +72,7 @@ test-suite pdeprelude-test
       DerivingVia
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      base >=4.19 && <5
     , hspec
     , pdeprelude
     , pretty-simple
