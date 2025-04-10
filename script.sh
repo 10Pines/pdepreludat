@@ -12,7 +12,14 @@ if ! command -v sed &> /dev/null; then
   exit 1
 fi
 
-latest_commit=$(curl -s https://api.github.com/repos/10Pines/pdepreludat/commits?per_page=1 | jq -r '.[0].sha')
+latest_release_tag=$(curl -s https://api.github.com/repos/10Pines/pdepreludat/releases/latest | jq -r '.tag_name')
+
+if [ -z "$latest_release_tag" ]; then
+    echo "Error: Failed to extract latest release tag"
+    exit 1
+fi
+
+latest_commit=$(curl -s https://api.github.com/repos/10Pines/pdepreludat/git/ref/tags/${latest_release_tag} | jq -r '.object.sha')
 
 if [ -z "$latest_commit" ]; then
     echo "Error: Failed to extract commit SHA"
@@ -43,7 +50,7 @@ fi
 resolver=$(sed -n '/^resolver/p' <<< "$stack_yaml_data")
 
 if [ -z "$resolver" ]; then
-  echo "Error: Failed to extract resovler information"
+  echo "Error: Failed to extract resolver information"
   exit 1
 fi
 
